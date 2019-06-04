@@ -31,7 +31,10 @@ app.post('/sendUrl', async (req, res) => {
     //validate user URL
     var validatUrl = /^(http[s]?:\/\/){0,1}(www\.){0,1}[a-zA-Z0-9\.\-]+\.[a-zA-Z]{2,5}[\.]{0,1}/;
     if (!validatUrl.test(req.body.url)) {
-        return res.json({ success: false })
+        return res.json({ 
+            success: false,
+            msg:'آدرس داده شده صحیح نیست'
+         })
     }
     else {
         let options = {
