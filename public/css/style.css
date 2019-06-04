@@ -75,7 +75,9 @@ body {
 #iconBox {
     margin: 0;
 }
-
+#downloadBox{
+    margin: 6% 0;
+}
 
 .file-upload {
     background-color: #ffffff;

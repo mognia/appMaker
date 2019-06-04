@@ -11,6 +11,8 @@
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" rel="stylesheet">
   <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="./css/spiner.css">
+  <link rel="stylesheet" href="./css/dlBtn.css">
 </head>
 
 <body>
@@ -30,6 +32,7 @@
           </div>
           <div class="alert alert-danger ErrAlert" id="urlErrAlert" role="alert"></div>
         </div>
+        <!-- /URL input box -->
         <!-- name Box -->
         <div class="inputBar" id="detailBox" style="display: none">
           <p>نام اپلیکشن خود را وارد کنید</p>
@@ -43,10 +46,11 @@
           </div>
           <div class="alert alert-danger ErrAlert" id="nameErrAlert" role="alert"> </div>
         </div>
+        <!-- /name Box -->
         <!-- Icon Box -->
         <div class="inputBar" id="iconBox" style="display: none">
           <p>آیکن اپلیکیشن خود را وارد کنید</p>
-       
+
           <div class="file-upload">
             <button class="file-upload-btn" type="button" onclick="$('.file-upload-input').trigger( 'click' )">انتخاب
               عکس</button>
@@ -61,9 +65,6 @@
               <img class="file-upload-image" src="#" alt="your image" />
               <div class="image-title-wrap">
                 <div class="btn-group btn-group-lg" role="group" aria-label="...">
-                  <!-- <button type="button" onclick="removeUpload()" class="remove-image"><i class="far fa-trash-alt"></i>
-                    <button type="button" class="btn btn-success">شروع</button> -->
-              
                   <button type="button" id="startProcess" onclick="start()" class="btn btn-outline-success">
                     <p style="display: inline">شروع پروسه</p>
                     <i class="fas fa-arrow-right"></i>
@@ -73,9 +74,30 @@
               </div>
             </div>
           </div>
-
-
         </div>
+        <!-- /Icon Box -->
+        <!-- wait Box -->
+        <div class="inputBar" id="waitBox" style="display: none">
+          <p>درحال تبدیل وبسایت شما به اپلیکیشن</p>
+          <div class="whirlpool">
+            <div class="ring ring1"></div>
+            <div class="ring ring2"></div>
+            <div class="ring ring3"></div>
+            <div class="ring ring4"></div>
+            <div class="ring ring5"></div>
+            <div class="ring ring6"></div>
+            <div class="ring ring7"></div>
+            <div class="ring ring8"></div>
+            <div class="ring ring9"></div>
+          </div>
+        </div>
+        <!-- /wait Box -->
+        <!-- Download Box -->
+        <div class="inputBar" id="downloadBox" style="display: none">
+          <p>تبریک! اپلیکیشن شما حاضر است</p>
+          <a href="#" id="dlBtn" class='button button4'>Download Me!</a>
+        </div>
+        <!-- /Download Box -->
       </div>
     </div>
   </div>

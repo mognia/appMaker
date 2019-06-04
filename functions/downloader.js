@@ -15,7 +15,7 @@ module.exports.downloadApp = async function (id,api){
       console.log('Done');
       response.json({
          succces:true,
-         apk : `./readyApps/${appName}.apk`
+         apk : `/readyApps/${appName}.apk`
      })
    })
 }

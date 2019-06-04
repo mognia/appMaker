@@ -7,6 +7,8 @@ const detailBox = $('#detailBox');
 const submitName = $('#submit-name');
 const NameInput = $('#NameInput');
 const iconBox = $('#iconBox');
+const waitBox = $('#waitBox');
+const downloadBox = $('#downloadBox');
 const centBox = $('#centBox');
 const startProcess = $('#startProcess');
 
@@ -24,7 +26,7 @@ submitUrl.click(function () {
         }, 4000);
         return false;
     }
-    var validatUrl = /^(http[s]?:\/\/){0,1}(www\.){0,1}[a-zA-Z0-9\.\-]+\.[a-zA-Z]{2,5}[\.]{0,1}/;
+    var validatUrl = /\b((http|https):\/\/?)[^\s()<>]+(?:\([\w\d]+\)|([^[:punct:]\s]|\/?))/g;
     if (!validatUrl.test(Url)) {
         urlErrAlert.text('آدرس وارد شده صحیح نیست')
         urlErrAlert.css({ 'display': 'block' });
@@ -64,49 +66,31 @@ submitName.click(function () {
 function getImg(params) {
     icon = params.files[0];
     console.log(icon);
-    
+
 }
 function start() {
-    console.log('ssssss');
-    
+    iconBox.fadeOut();
+    setTimeout(function (params) {
+        waitBox.fadeIn();
+    }, 900);
     var formdata = new FormData(this);
-    formdata.append('url',Url);
-    formdata.append('name',Name);
-    formdata.append('icon',icon);
+    formdata.append('url', Url);
+    formdata.append('name', Name);
+    formdata.append('icon', icon);
     $.ajax({
         type: "POST",
+        timeout:0,
         url: "/sendUrl",
         data: formdata,
         cache: false,
         contentType: false,
         processData: false
     }).done(function (respond) {
-        console.log(respond);
+        waitBox.fadeOut();
+        setTimeout(function (params) {
+          
+            downloadBox.fadeIn();
+        }, 900);
+        $('#dlBtn').attr('href', `#/${respond['apk']}`);
     });
 }
-startProcess.click(function (params) {
-    // create FormData object
-    // var formdata = new FormData(this);
-    // formdata.append('url',Url);
-    // formdata.append('name',Name);
-    // formdata.append('icon',icon);
-    // $.ajax({
-    //     type: "POST",
-    //     url: "/sendUrl",
-    //     data: formdata,
-    //     cache: false,
-    //     contentType: false,
-    //     processData: false
-    // }).done(function (respond) {
-    //     console.log(respond);
-    // });
-    //     $.post('/sendUrl',{url :Url,name:Name } ,function (data) {
-    //     let success = data['success'];
-    //     let msg = data['msg']
-    //     if (!success) {
-
-    //     }
-    //     console.log(data);
-
-    // });
-})
