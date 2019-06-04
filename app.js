@@ -8,7 +8,7 @@ var app = express()
 const auth = require("./functions/auth");
 var rimraf = require("rimraf");
 const { zip } = require('zip-a-folder');
-
+const Jimp = require('jimp');
 const dotenv = require('dotenv');
 dotenv.config();
 
@@ -26,7 +26,7 @@ app.use(cors());
 app.use(express.static(path.join(__dirname, "public")));
 
 //get user URL
-app.post('/sendUrl',async (req, res) => {
+app.post('/sendUrl', async (req, res) => {
 
     //validate user URL
     var validatUrl = /^(http[s]?:\/\/){0,1}(www\.){0,1}[a-zA-Z0-9\.\-]+\.[a-zA-Z]{2,5}[\.]{0,1}/;
@@ -38,9 +38,9 @@ app.post('/sendUrl',async (req, res) => {
             urls: [req.body.url],
             directory: './temp/www',
         };
-       scraper(options).then(res=>{
-           zipper()
-       });
+        scraper(options).then(res => {
+            imageResizer()
+        });
 
     }
     //download whole website
@@ -77,18 +77,67 @@ app.post('/sendUrl',async (req, res) => {
 
     }
 
+    function imageResizer(params) {
+        console.log('start resizing');
+        //making android icons
+        Jimp.read('lenna.png')
+            .then(lenna => {
+                return lenna
+                .resize(192, 192, Jimp.RESIZE_NEAREST_NEIGHBOR) // resize
+                .write('./Temp/res/icon/android/drawable-xxxhdpi-icon.png'); // save
+                  
+            }).then(lenna => {
+                return lenna
+                .resize(144, 144, Jimp.RESIZE_NEAREST_NEIGHBOR) // resize
+                .write('./Temp/res/icon/android/drawable-xxhdpi-icon.png'); // save
+         
+            });
+            Jimp.read('lenna.png')
+            .then(lenna => {
+                return lenna
+                .resize(96, 96, Jimp.RESIZE_NEAREST_NEIGHBOR) // resize
+                .write('./Temp/res/icon/android/drawable-xhdpi-icon.png'); // save
+                   
+            }).then(lenna => {
+                return lenna
+                .resize(48, 48, Jimp.RESIZE_NEAREST_NEIGHBOR) // resize
+                .write('./Temp/res/icon/android/drawable-mdpi-icon.png'); // save
+            });
+            Jimp.read('lenna.png')
+            .then(lenna => {
+                return lenna
+                .resize(72, 72, Jimp.RESIZE_NEAREST_NEIGHBOR) // resize
+                .write('./Temp/res/icon/android/drawable-hdpi-icon.png'); // save
+              
+            }).then(lenna => {
+                return lenna
+                .resize(36, 36, Jimp.RESIZE_NEAREST_NEIGHBOR) // resize
+                .write('./Temp/res/icon/android/drawable-ldpi-icon.png'); // save
+            }).then(lenna => {
+                console.log('done resizing');
+
+                zipper()
+            }
+            )
+            .catch(err => {
+                console.error(err);
+            });
+    }
+
     //zip downloaded website
-  async  function zipper(params) {
-        let buildFolder = './temp'
+    async function zipper(params) {
+        let buildFolder = './temp';
+        console.log('start zipping');
+        
         try {
             await zip(buildFolder, './temp.zip').then(res=>{
                 authUser()
-                
+
             });
-            
+
         } catch (error) {
          console.log(error);
-            
+
         }
     }
 
