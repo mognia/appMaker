@@ -9,35 +9,80 @@
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" rel="stylesheet">
   <link rel="stylesheet" href="./css/style.css">
 </head>
 
 <body>
   <div class="container-fluid">
     <div class=" row ">
-      <div class="centBox align-items-center">
-        <div class="inputBar">
-          <p>لطفا آدرس وب سایت مورد نظر را به صورت صحیح وارد کنید</p>
+      <div class="centBox align-items-center" id="centBox">
+        <!-- URL input box -->
+        <div class="inputBar" id="urlBox">
+          <p>لطفا آدرس وب سایت مورد نظر را وارد کنید</p>
           <div class="input-group mb-3">
-              <input type="text" id="urlInpu" class="form-control" placeholder="Website URL" aria-label="Recipient's username" aria-describedby="button-addon2">
-              <div class="input-group-append">
-                <button class="btn btn-outline-secondary" id="submit-button" type="button" id="button-addon2">GO!</button>
+            <input type="text" id="urlInput" class="form-control" placeholder="Website URL"
+              aria-label="Recipient's username" aria-describedby="button-addon2">
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary" id="submit-url" type="button" id="button-addon2"><i
+                  class="fas fa-arrow-right"></i></button>
+            </div>
+          </div>
+          <div class="alert alert-danger ErrAlert" id="urlErrAlert" role="alert"></div>
+        </div>
+        <!-- name Box -->
+        <div class="inputBar" id="detailBox" style="display: none">
+          <p>نام اپلیکشن خود را وارد کنید</p>
+          <div class="input-group mb-3">
+            <input type="text" id="NameInput" class="form-control" placeholder="Application Name"
+              aria-label="Recipient's username" aria-describedby="button-addon2">
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary" id="submit-name" type="button" id="button-addon2"><i
+                  class="fas fa-arrow-right"></i></button>
+            </div>
+          </div>
+          <div class="alert alert-danger ErrAlert" id="nameErrAlert" role="alert"> </div>
+        </div>
+        <!-- Icon Box -->
+        <div class="inputBar" id="iconBox" style="display: none">
+          <p>آیکن اپلیکیشن خود را وارد کنید</p>
+       
+          <div class="file-upload">
+            <button class="file-upload-btn" type="button" onclick="$('.file-upload-input').trigger( 'click' )">انتخاب
+              عکس</button>
+
+            <div class="image-upload-wrap">
+              <input class="file-upload-input" type='file' onchange="readURL(this);getImg(this);" accept="image/*" />
+              <div class="drag-text">
+                <h3>فایل خود را اینجا قرار دهید</h3>
               </div>
             </div>
-            <div class="alert alert-danger" id="ErrAlert" role="alert">
-                A simple danger alert—check it out!
+            <div class="file-upload-content">
+              <img class="file-upload-image" src="#" alt="your image" />
+              <div class="image-title-wrap">
+                <div class="btn-group btn-group-lg" role="group" aria-label="...">
+                  <!-- <button type="button" onclick="removeUpload()" class="remove-image"><i class="far fa-trash-alt"></i>
+                    <button type="button" class="btn btn-success">شروع</button> -->
+              
+                  <button type="button" id="startProcess" class="btn btn-outline-success">
+                    <p style="display: inline">شروع پروسه</p>
+                    <i class="fas fa-arrow-right"></i>
+                  </button>
+                </div>
+                </button>
               </div>
+            </div>
+          </div>
+
+
         </div>
       </div>
     </div>
   </div>
 
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-  <script
-  src="https://code.jquery.com/jquery-3.4.1.min.js"
-  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-  crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+    integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
     integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
@@ -48,5 +93,6 @@
 </body>
 
 <script src="./js/index.js"></script>
+<script src="./js/uploader.js"></script>
 
 </html>

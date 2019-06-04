@@ -9,6 +9,17 @@ const auth = require("./functions/auth");
 var rimraf = require("rimraf");
 const { zip } = require('zip-a-folder');
 const Jimp = require('jimp');
+var multer  = require('multer')
+var storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, './icons')
+    },
+    filename: function (req, file, cb) {
+        cb(null, file.originalname); // modified here  or user file.mimetype
+    }
+});
+var upload = multer({ storage: storage })
+  
 const dotenv = require('dotenv');
 dotenv.config();
 
@@ -26,26 +37,21 @@ app.use(cors());
 app.use(express.static(path.join(__dirname, "public")));
 
 //get user URL
-app.post('/sendUrl', async (req, res) => {
+app.post('/sendUrl', upload.single('icon') ,async (req, res) => {
 
     //validate user URL
-    var validatUrl = /^(http[s]?:\/\/){0,1}(www\.){0,1}[a-zA-Z0-9\.\-]+\.[a-zA-Z]{2,5}[\.]{0,1}/;
-    if (!validatUrl.test(req.body.url)) {
-        return res.json({ 
-            success: false,
-            msg:'آدرس داده شده صحیح نیست'
-         })
-    }
-    else {
+
+        console.log(req.body);
+        
         let options = {
             urls: [req.body.url],
             directory: './temp/www',
         };
-        scraper(options).then(res => {
-            imageResizer()
-        });
+        // scraper(options).then(res => {
+        //     imageResizer()
+        // });
 
-    }
+    
     //download whole website
     async function scraper(options) {
         return new Promise(async function (resolve, reject) {
