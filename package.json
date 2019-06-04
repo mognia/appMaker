@@ -16,6 +16,7 @@
     "phonegap-build-api": "^1.0.0",
     "rimraf": "^2.6.3",
     "website-scraper": "^4.0.1",
+    "zip-a-folder": "0.0.8",
     "zip-folder": "^1.0.0"
   }
 }

@@ -7,7 +7,8 @@ const cors = require("cors");
 var app = express()
 const auth = require("./functions/auth");
 var rimraf = require("rimraf");
-var zipFolder = require('zip-folder');
+const { zip } = require('zip-a-folder');
+
 const dotenv = require('dotenv');
 dotenv.config();
 
@@ -25,7 +26,7 @@ app.use(cors());
 app.use(express.static(path.join(__dirname, "public")));
 
 //get user URL
-app.post('/sendUrl', (req, res) => {
+app.post('/sendUrl',async (req, res) => {
 
     //validate user URL
     var validatUrl = /^(http[s]?:\/\/){0,1}(www\.){0,1}[a-zA-Z0-9\.\-]+\.[a-zA-Z]{2,5}[\.]{0,1}/;
@@ -35,53 +36,60 @@ app.post('/sendUrl', (req, res) => {
     else {
         let options = {
             urls: [req.body.url],
-            directory: './temp',
+            directory: './temp/www',
         };
-        scraper(options).then(res => {
-            zipper(options).then(res => {
-
-                authUser();
-            })
-
-        });
-
+       scraper(options).then(res=>{
+           zipper()
+       });
 
     }
     //download whole website
     async function scraper(options) {
-        try {
-            // with async/await
-            await scrape(options);
+        return new Promise(async function (resolve, reject) {
+            console.log('scraper start..');
 
-        } catch (error) {
-            if (fs.existsSync('./temp')) {
-                rimraf('./temp', async function () {
-                    console.log("Deleting Temp Folder...");
-                    await scrape(options);
+            if (fs.existsSync(options.directory)) {
+                rimraf(options.directory, async function () {
+                    console.log("Deleting www Folder...");
+                    console.log('scrapping....');
+                    scrape(options).then((result) => {
+                        resolve();
+                    });
+
+                });
+            } else {
+                // with async/await
+                console.log('scrapping....');
+                scrape(options).then((result) => {
+                    resolve();
+                    console.log('done scrapping');
                 });
             }
-        }
 
+        })
 
     }
     //auth user in buils.phonegap with token
     async function authUser() {
+        console.log('auth');
+
         authunticate = await auth.authUser()
 
     }
 
     //zip downloaded website
-    async function zipper(options) {
-        zipFolder(options.directory, './temp.zip', function (err) {
-            if (err) {
-                console.log('oh no!', err);
-            } else {
-                console.log('EXCELLENT');
-                rimraf('./temp', async function () {
-                    console.log("Deleting Temp Folder...");
-                });
-            }
-        });
+  async  function zipper(params) {
+        let buildFolder = './temp'
+        try {
+            await zip(buildFolder, './temp.zip').then(res=>{
+                authUser()
+                
+            });
+            
+        } catch (error) {
+         console.log(error);
+            
+        }
     }
 
 });
