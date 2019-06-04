@@ -1,5 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <widget xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0" id="com.phonegap.helloworld" version="1.0.0">
-  <name>Temp</name>
+  <name>testy</name>
   <description>Hello World sample application that responds to the deviceready event.</description>
   <author href="http://phonegap.com" email="support@phonegap.com">PhoneGap Team</author>
   <content src="index.html"/>
@@ -72,7 +73,6 @@
     <icon src="/res/icon/windows/Square150x150Logo.scale-100.png" platform="windows" width="150" height="150"/>
     <icon src="/res/icon/windows/Square30x30Logo.scale-100.png" platform="windows" width="30" height="30"/>
     <icon src="/res/icon/windows/StoreLogo.scale-100.png" platform="windows" width="50" height="50"/>
-    <splash src="/res/screen/windows/SplashScreen.scale-100.png" platform="windows" width="620" height="300"/>
     <icon src="/res/icon/windows/StoreLogo.scale-240.png" platform="windows" width="120" height="120"/>
     <icon src="/res/icon/windows/Square44x44Logo.scale-100.png" platform="windows" width="44" height="44"/>
     <icon src="/res/icon/windows/Square44x44Logo.scale-240.png" platform="windows" width="106" height="106"/>
@@ -83,7 +83,15 @@
     <icon src="/res/icon/windows/Square310x310Logo.scale-100.png" platform="windows" width="310" height="310"/>
     <icon src="/res/icon/windows/Wide310x150Logo.scale-100.png" platform="windows" width="310" height="150"/>
     <icon src="/res/icon/windows/Wide310x150Logo.scale-240.png" platform="windows" width="744" height="360"/>
+    <splash src="/res/screen/windows/SplashScreen.scale-100.png" platform="windows" width="620" height="300"/>
     <splash src="/res/screen/windows/SplashScreenPhone.scale-240.png" platform="windows" width="1152" height="1920"/>
+  </platform>
+  <platform name="android">
+    <allow-intent href="market:*"/>
+  </platform>
+  <platform name="ios">
+    <allow-intent href="itms:*"/>
+    <allow-intent href="itms-apps:*"/>
   </platform>
   <access origin="*"/>
   <allow-intent href="http://*/*"/>
@@ -92,11 +100,4 @@
   <allow-intent href="sms:*"/>
   <allow-intent href="mailto:*"/>
   <allow-intent href="geo:*"/>
-  <platform name="android">
-    <allow-intent href="market:*"/>
-  </platform>
-  <platform name="ios">
-    <allow-intent href="itms:*"/>
-    <allow-intent href="itms-apps:*"/>
-  </platform>
 </widget>

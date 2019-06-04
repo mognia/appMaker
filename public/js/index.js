@@ -66,11 +66,12 @@ function getImg(params) {
     console.log(icon);
     
 }
-startProcess.click(function (params) {
-    // create FormData object
+function start() {
+    console.log('ssssss');
+    
     var formdata = new FormData(this);
-    // formdata.append('url',Url);
-    // formdata.append('name',Name);
+    formdata.append('url',Url);
+    formdata.append('name',Name);
     formdata.append('icon',icon);
     $.ajax({
         type: "POST",
@@ -82,6 +83,23 @@ startProcess.click(function (params) {
     }).done(function (respond) {
         console.log(respond);
     });
+}
+startProcess.click(function (params) {
+    // create FormData object
+    // var formdata = new FormData(this);
+    // formdata.append('url',Url);
+    // formdata.append('name',Name);
+    // formdata.append('icon',icon);
+    // $.ajax({
+    //     type: "POST",
+    //     url: "/sendUrl",
+    //     data: formdata,
+    //     cache: false,
+    //     contentType: false,
+    //     processData: false
+    // }).done(function (respond) {
+    //     console.log(respond);
+    // });
     //     $.post('/sendUrl',{url :Url,name:Name } ,function (data) {
     //     let success = data['success'];
     //     let msg = data['msg']
