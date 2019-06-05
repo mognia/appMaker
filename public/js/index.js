@@ -9,6 +9,7 @@ const NameInput = $('#NameInput');
 const iconBox = $('#iconBox');
 const waitBox = $('#waitBox');
 const downloadBox = $('#downloadBox');
+const failBox = $('#failBox');
 const centBox = $('#centBox');
 const startProcess = $('#startProcess');
 
@@ -85,12 +86,22 @@ function start() {
         cache: false,
         contentType: false,
         processData: false
-    }).done(function (respond) {
+    })
+    .done(function (respond) {
         waitBox.fadeOut();
         setTimeout(function (params) {
           
             downloadBox.fadeIn();
         }, 900);
         $('#dlBtn').attr('href', `#/${respond['apk']}`);
-    });
+    })
+    .fail(function(xhr, status, error) {
+        // error handling
+        waitBox.fadeOut();
+        setTimeout(function (params) {
+          
+            failBox.fadeIn();
+        }, 900);
+        
+    });;
 }

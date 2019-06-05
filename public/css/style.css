@@ -78,7 +78,10 @@ body {
 #downloadBox{
     margin: 6% 0;
 }
-
+.sadFace {
+    font-size: 94px;
+    color: red;
+}
 .file-upload {
     background-color: #ffffff;
     margin: 0 auto;

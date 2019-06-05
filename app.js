@@ -61,11 +61,13 @@ app.post('/sendUrl', upload.single('icon') ,async (req, res) => {
     async function scraper(options) {
         return new Promise(async function (resolve, reject) {
             console.log('scraper start..');
-
+            res.write('scraper start..')
             if (fs.existsSync(options.directory)) {
                 rimraf(options.directory, async function () {
                     console.log("Deleting www Folder...");
+                    res.write("Deleting www Folder...")
                     console.log('scrapping....');
+                    res.write('scrapping....')
                     scrape(options).then((result) => {
                         resolve();
                     });
