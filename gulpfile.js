@@ -2,8 +2,8 @@ var gulp = require("gulp");
 var ts = require("gulp-typescript");
 var fs = require("fs-extra");
 var mocha = require("gulp-mocha");
-var runSequence = require("run-sequence");
 var child = require("child_process");
+var typedoc = require("gulp-typedoc");
 
 var paths = {
   dist: "dist",
@@ -32,6 +32,41 @@ function build() {
       })
     )
     .pipe(gulp.dest(paths.dist));
+}
+
+function typedoc() {
+  return gulp
+    .src([
+      paths.tsSources,
+      "./node_modules/serendip-business-model/src/auth/*.ts",
+      "./node_modules/serendip-business-model/src/db/*.ts",
+      "./node_modules/serendip-business-model/src/Server*.ts"
+    ])
+    .pipe(
+      typedoc({
+        // TypeScript options (see typescript docs)
+        module: "commonjs",
+        target: "es2017",
+
+        includeDeclarations: true,
+        excludePrivate: true,
+        excludeProtected: true,
+        excludeExternals: true,
+        readme: "doc.md",
+        hideGenerator: true,
+        exclude: ["./src/app.ts", "*/**/index.ts"],
+        // Output options (see typedoc docs)
+        out: "./doc",
+        json: "./doc.json",
+
+        // TypeDoc options (see typedoc docs)
+        name: "Serendip Business API",
+        // theme: "minimal",
+        theme: "markdown",
+        ignoreCompilerErrors: false,
+        version: true
+      })
+    );
 }
 function handleError(err) {
   console.log(err.toString());
@@ -63,8 +98,8 @@ function run(done) {
   done();
 }
 
-gulp.watch(paths.tsSources, gulp.series(build, test, run));
+gulp.watch(paths.tsSources, gulp.series(build, run, test));
 
 exports.test = gulp.series(build, test, async () => {});
 exports.build = gulp.series(build);
-exports.default = gulp.series(build, test, run);
+exports.default = gulp.series(build, run, test);

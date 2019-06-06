@@ -8,27 +8,32 @@ export class BuildController {
   constructor() {}
 
   static async buildWithUrl(req: Request, res: Response) {
-    multer({
-      storage: multer.diskStorage({
-        destination: (req, file, cb) => cb(null, "./icons"),
-        filename: (req, file, cb) => cb(null, file.originalname) // modified here  or user file.mimetype
-      })
-    }).single("icon");
-
+    await new Promise((resolve, reject) => {
+      multer({
+        storage: multer.diskStorage({
+          destination: (req, file, cb) => cb(null, "./icons"),
+          filename: (req, file, cb) => cb(null, file.originalname) // modified here  or user file.mimetype
+        })
+      }).single("icon")(req, res, err => {
+        if (err) return reject(err);
+        resolve();
+      });
+    });
     //validate user URL
     Log.info(req.body.url);
-
-console.log(req.file.filename);
 
     let options = {
       urls: [req.body.url],
       directory: "./temp/www",
       appName: "app-name-temp",
-      iconName: req.file.filename
+      iconName: req.file ? req.file.filename : null
     };
     // Log.info();
 
-    if (fs.existsSync(options.directory)) await fs.unlink(options.directory);
+    if (fs.existsSync(options.directory)) {
+      await fs.emptyDir(options.directory);
+      await fs.rmdir(options.directory);
+    }
 
     await App.services.scrape.run(options);
 

@@ -78,5 +78,9 @@ typings/
 *.apk
 *.png
 
-*Temp/*
-Temp/res/icon/android/drawable-hdpi-icon.png
+*cordova/*
+cordova/res/icon/android/drawable-hdpi-icon.png
+
+cordova
+
+temp

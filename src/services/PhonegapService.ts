@@ -1,4 +1,4 @@
-import client from "phonegap-build-api";
+import * as client from "phonegap-build-api";
 import * as fs from "fs-extra";
 import { rejects } from "assert";
 import { resolve } from "path";
@@ -8,13 +8,17 @@ export class PhonegapService {
   async start() {}
 
   authUser(): Promise<any> {
-    const token = process.env.TOKEN;
-
     return new Promise((resolve, reject) => {
-      client.auth({ token: token }, function(e, api) {
-        if (e) return reject(e);
-        return resolve(api);
-      });
+      client.auth(
+        {
+          username: process.env["phonegap.username"],
+          password: process.env["phonegap.password"]
+        },
+        function(e, api) {
+          if (e) return reject(e);
+          return resolve(api);
+        }
+      );
     });
   }
 
@@ -94,9 +98,7 @@ export class PhonegapService {
 
     return new Promise((resolve, reject) => {
       file.on("error", e => reject(e));
-      file.on("close", () =>
-        resolve()
-      );
+      file.on("close", () => resolve());
     });
   }
 }

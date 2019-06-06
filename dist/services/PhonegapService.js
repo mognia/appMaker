@@ -8,7 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const phonegap_build_api_1 = require("phonegap-build-api");
+const client = require("phonegap-build-api");
 const fs = require("fs-extra");
 const assert_1 = require("assert");
 const log_1 = require("../log");
@@ -18,9 +18,11 @@ class PhonegapService {
         return __awaiter(this, void 0, void 0, function* () { });
     }
     authUser() {
-        const token = process.env.TOKEN;
         return new Promise((resolve, reject) => {
-            phonegap_build_api_1.default.auth({ token: token }, function (e, api) {
+            client.auth({
+                username: process.env["phonegap.username"],
+                password: process.env["phonegap.password"]
+            }, function (e, api) {
                 if (e)
                     return reject(e);
                 return resolve(api);

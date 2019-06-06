@@ -16,24 +16,31 @@ class BuildController {
     constructor() { }
     static buildWithUrl(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            multer({
-                storage: multer.diskStorage({
-                    destination: (req, file, cb) => cb(null, "./icons"),
-                    filename: (req, file, cb) => cb(null, file.originalname) // modified here  or user file.mimetype
-                })
-            }).single("icon");
+            yield new Promise((resolve, reject) => {
+                multer({
+                    storage: multer.diskStorage({
+                        destination: (req, file, cb) => cb(null, "./icons"),
+                        filename: (req, file, cb) => cb(null, file.originalname) // modified here  or user file.mimetype
+                    })
+                }).single("icon")(req, res, err => {
+                    if (err)
+                        return reject(err);
+                    resolve();
+                });
+            });
             //validate user URL
             log_1.Log.info(req.body.url);
-            console.log(req.file.filename);
             let options = {
                 urls: [req.body.url],
                 directory: "./temp/www",
                 appName: "app-name-temp",
-                iconName: req.file.filename
+                iconName: req.file ? req.file.filename : null
             };
             // Log.info();
-            if (fs.existsSync(options.directory))
-                yield fs.unlink(options.directory);
+            if (fs.existsSync(options.directory)) {
+                yield fs.emptyDir(options.directory);
+                yield fs.rmdir(options.directory);
+            }
             yield app_1.App.services.scrape.run(options);
             const pbService = app_1.App.services.phonegap;
             const pbApi = yield pbService.authUser();

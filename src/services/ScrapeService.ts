@@ -18,7 +18,7 @@ export class ScrapeService {
     if (fs.existsSync(opts.directory)) await fs.unlink(opts.directory);
 
     await scrape(opts);
-    await this.iconResizer(opts.iconName);
+    if (opts.iconName) await this.iconResizer(opts.iconName);
   }
 
   async iconResizer(iconName: string) {
@@ -42,7 +42,7 @@ export class ScrapeService {
         jimp
           .resize(parseInt(size), parseInt(size), Jimp.RESIZE_NEAREST_NEIGHBOR) // resize
           .write(
-            `./Temp/res/icon/android/drawable-${neededIcons[size]}-icon.png`,
+            `./cordova/res/icon/android/drawable-${neededIcons[size]}-icon.png`,
             err => {
               if (err) return reject(err);
               resolve();
@@ -53,7 +53,7 @@ export class ScrapeService {
   }
 
   async writeConfig(opts: { appName: string }) {
-    const configStr = await fs.readFile("./Temp/config.xml", "utf-8");
+    const configStr = await fs.readFile("./cordova/config.xml", "utf-8");
 
     const json: any = await new Promise((resolve, reject) => {
       parseString(configStr, (err: any, result: any) => {
@@ -71,7 +71,7 @@ export class ScrapeService {
     var builder = new Builder();
     var xml = builder.buildObject(json);
 
-    await fs.writeFile("./Temp/config.xml", xml);
+    await fs.writeFile("./cordova/config.xml", xml);
 
     Log.info("successfully written our update xml to file");
     Log.info("start zipping");

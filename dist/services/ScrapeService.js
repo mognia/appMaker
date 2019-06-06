@@ -25,7 +25,8 @@ class ScrapeService {
             if (fs.existsSync(opts.directory))
                 yield fs.unlink(opts.directory);
             yield scrape(opts);
-            yield this.iconResizer(opts.iconName);
+            if (opts.iconName)
+                yield this.iconResizer(opts.iconName);
         });
     }
     iconResizer(iconName) {
@@ -46,7 +47,7 @@ class ScrapeService {
                 yield new Promise((resolve, reject) => {
                     jimp
                         .resize(parseInt(size), parseInt(size), Jimp.RESIZE_NEAREST_NEIGHBOR) // resize
-                        .write(`./Temp/res/icon/android/drawable-${neededIcons[size]}-icon.png`, err => {
+                        .write(`./cordova/res/icon/android/drawable-${neededIcons[size]}-icon.png`, err => {
                         if (err)
                             return reject(err);
                         resolve();
@@ -57,7 +58,7 @@ class ScrapeService {
     }
     writeConfig(opts) {
         return __awaiter(this, void 0, void 0, function* () {
-            const configStr = yield fs.readFile("./Temp/config.xml", "utf-8");
+            const configStr = yield fs.readFile("./cordova/config.xml", "utf-8");
             const json = yield new Promise((resolve, reject) => {
                 xml2js_1.parseString(configStr, (err, result) => {
                     if (err)
@@ -70,7 +71,7 @@ class ScrapeService {
             // our json back to xml.
             var builder = new xml2js_1.Builder();
             var xml = builder.buildObject(json);
-            yield fs.writeFile("./Temp/config.xml", xml);
+            yield fs.writeFile("./cordova/config.xml", xml);
             log_1.Log.info("successfully written our update xml to file");
             log_1.Log.info("start zipping");
             yield zip_a_folder_1.zip("./temp", "./temp.zip");
