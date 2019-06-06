@@ -8,7 +8,7 @@ var child = require("child_process");
 var paths = {
   dist: "dist",
   tsSources: "src/**/*.ts",
-  tests: "dist/*.test.js"
+  tests: "dist/tests/*.js"
 };
 
 // compile typescripts
@@ -63,8 +63,8 @@ function run(done) {
   done();
 }
 
-gulp.watch(paths.tsSources, gulp.series(build, run));
+gulp.watch(paths.tsSources, gulp.series(build, test, run));
 
 exports.test = gulp.series(build, test, async () => {});
 exports.build = gulp.series(build);
-exports.default = gulp.series(build, run);
+exports.default = gulp.series(build, test, run);

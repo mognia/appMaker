@@ -18,6 +18,8 @@ export class BuildController {
     //validate user URL
     Log.info(req.body.url);
 
+console.log(req.file.filename);
+
     let options = {
       urls: [req.body.url],
       directory: "./temp/www",

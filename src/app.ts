@@ -53,11 +53,45 @@ export class App {
     this.express.use(cors());
 
     // Set Static Folder
+
+    this.express.use(async (req, res, next) => {
+      const reqStart = Date.now();
+      await next();
+      const resTime = Date.now() - reqStart;
+
+      res.header("X-Response-Time", `${resTime}ms`);
+      Log.info(
+        `[${req.method}] ${req.url} in ${resTime}ms | ${
+          res.statusCode
+        } ${res.statusMessage || ""} `
+      );
+    });
+
     this.express.use(Express.static(path.join(__dirname, "..", "public")));
   }
 
-  static bootstrap(opts: { port: number }) {
+  static async bootstrap(opts: { port: number }) {
     App.instance = new App();
+
+    for (const serviceName in App.services) {
+      await App.services[serviceName].start();
+    }
+
+    // tslint:disable-next-line: forin
+    for (const route in this.routes) {
+      if (this.routes.hasOwnProperty(route)) {
+        const options = this.routes[route];
+        if (options.method === "GET") {
+          App.instance.express.get(route, options.endpoint);
+        }
+
+        if (options.method === "POST") {
+          App.instance.express.post(route, options.endpoint);
+        }
+
+        Log.info(`Route registered: ${options.method} ${route}`);
+      }
+    }
 
     return new Promise((resolve, reject) => {
       App.instance.express.listen(opts.port, () => {
