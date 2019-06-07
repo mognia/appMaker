@@ -103,6 +103,7 @@ class PhonegapService {
                     return __awaiter(this, void 0, void 0, function* () {
                         if (e)
                             reject(e);
+                        log_1.Log.info("app uploaded", data);
                         // TODO: delete zip folder after upload
                         resolve(data);
                     });

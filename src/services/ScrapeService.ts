@@ -7,8 +7,6 @@ import { parseString, Builder } from "xml2js";
 import { zip } from "zip-a-folder";
 import { Log } from "../log";
 export class ScrapeService {
-
-
   constructor() {}
   async start() {}
   async run(opts: {
@@ -16,19 +14,29 @@ export class ScrapeService {
     directory: string;
     icon: string;
     appName: string;
+    uid: string;
   }) {
     if (fs.existsSync(opts.directory)) await fs.unlink(opts.directory);
-
     await scrape(opts);
-    if (opts.icon) await this.iconResizer(opts.icon);
+
+    await fs.copy("./cordova/res", `./temp/${opts.uid}/res`);
+
+    if (opts.icon) {
+      await this.iconResizer(opts);
+    }
   }
 
-  async iconResizer(icon: string) {
+  async iconResizer(opts: { icon: string; uid: string }) {
     Log.info("start resizing");
     //  let iconName = req.file.filename;
     //making android icons
 
-    const jimp = await Jimp.read(new Buffer(icon, "base64"));
+    const jimp = await Jimp.read(
+      new Buffer(
+        opts.icon.indexOf(",") === -1 ? opts.icon : opts.icon.split(",")[1],
+        "base64"
+      )
+    );
 
     const neededIcons = {
       36: "ldpi",
@@ -44,7 +52,9 @@ export class ScrapeService {
         jimp
           .resize(parseInt(size), parseInt(size), Jimp.RESIZE_NEAREST_NEIGHBOR) // resize
           .write(
-            `./cordova/res/icon/android/drawable-${neededIcons[size]}-icon.png`,
+            `./temp/${opts.uid}/res/icon/android/drawable-${
+              neededIcons[size]
+            }-icon.png`,
             err => {
               if (err) return reject(err);
               resolve();

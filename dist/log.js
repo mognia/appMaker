@@ -10,6 +10,7 @@ class Log {
     }
     static error(message, ...optionalParams) {
         console.error(chalk_1.default.red(Log.dateString + " | ") + message, ...optionalParams);
+        throw message;
     }
 }
 exports.Log = Log;

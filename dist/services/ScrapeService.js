@@ -24,16 +24,18 @@ class ScrapeService {
             if (fs.existsSync(opts.directory))
                 yield fs.unlink(opts.directory);
             yield scrape(opts);
-            if (opts.icon)
-                yield this.iconResizer(opts.icon);
+            yield fs.copy("./cordova/res", `./temp/${opts.uid}/res`);
+            if (opts.icon) {
+                yield this.iconResizer(opts);
+            }
         });
     }
-    iconResizer(icon) {
+    iconResizer(opts) {
         return __awaiter(this, void 0, void 0, function* () {
             log_1.Log.info("start resizing");
             //  let iconName = req.file.filename;
             //making android icons
-            const jimp = yield Jimp.read(new Buffer(icon, "base64"));
+            const jimp = yield Jimp.read(new Buffer(opts.icon.indexOf(",") === -1 ? opts.icon : opts.icon.split(",")[1], "base64"));
             const neededIcons = {
                 36: "ldpi",
                 48: "mdpi",
@@ -46,7 +48,7 @@ class ScrapeService {
                 yield new Promise((resolve, reject) => {
                     jimp
                         .resize(parseInt(size), parseInt(size), Jimp.RESIZE_NEAREST_NEIGHBOR) // resize
-                        .write(`./cordova/res/icon/android/drawable-${neededIcons[size]}-icon.png`, err => {
+                        .write(`./temp/${opts.uid}/res/icon/android/drawable-${neededIcons[size]}-icon.png`, err => {
                         if (err)
                             return reject(err);
                         resolve();

@@ -18,7 +18,11 @@ export class BuildService {
       if (!this.currentQueueItem) {
         this.initiateQueue()
           .then(() => {})
-          .catch(e => {
+          .catch(async e => {
+            const optionsPath = "./queue/" + this.currentQueueItem.uid + '.json';
+            this.currentQueueItem.processingError = (e || "").toString();
+            await fs.writeJSON(optionsPath, this.currentQueueItem);
+            this.currentQueueItem = null;
             Log.error(e);
           });
       }
@@ -37,6 +41,7 @@ export class BuildService {
         !options.processingStarted ||
         (options.processingStarted &&
           !options.processingFinished &&
+          !options.processingError &&
           Date.now() - options.processingStarted > 60000)
       ) {
         break;
@@ -61,12 +66,12 @@ export class BuildService {
       const pbApi = await pbService.authUser();
       await pbService.removePrevious(pbApi);
 
-      //  await pbService.uploadApp(options, pbApi);
+      await pbService.uploadApp(options, pbApi);
 
       const newApp = await pbService.currentApp(pbApi);
 
-      //  await pbService.buildApp(newApp.id, pbApi);
-      //  await pbService.downloadApp(options, newApp.id, pbApi);
+      await pbService.buildApp(newApp.id, pbApi);
+      await pbService.downloadApp(options, newApp.id, pbApi);
 
       options.processingFinished = Date.now();
       await fs.writeJSON(optionsPath, options);

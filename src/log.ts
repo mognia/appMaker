@@ -15,5 +15,7 @@ export class Log {
       chalk.red(Log.dateString + " | ") + message,
       ...optionalParams
     );
+
+    throw message;
   }
 }

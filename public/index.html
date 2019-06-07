@@ -17,11 +17,15 @@
       <div class="inner">
 
         <div class="title">
-        <h1>Hybrid App Maker</h1>
-        <small>Just a URL needed</small>
+          <h1>Hybrid App Maker</h1>
+          <small>Just a URL needed</small>
 
-      </div>
+        </div>
 
+
+        <div class="img">
+
+        </div>
         <form action="">
 
           <div class="input">
@@ -36,7 +40,7 @@
 
           <div class="input">
             <label for="">Icon</label>
-            <input type="file" id="icon" />
+            <input type="file" id="file" />
           </div>
 
           <button type="submit">
@@ -76,6 +80,7 @@
   <script>
     $(function () {
 
+
       setInterval(() => {
         let history = [];
         if (localStorage.getItem('history')) {
@@ -96,7 +101,10 @@
 
         for (const item of history) {
           $('.history table tbody').append($(
-            `<tr><td>${item.appName}</td><td>${item.urls}</td><td>${item.processingFinished ? '<a href="">Download</a>' : item.processingStarted ? 'Building' : 'Queued'}</td></tr>`
+            `<tr>
+              <td>${item.appName}</td>
+              <td>${item.urls}</td>
+              <td>${item.processingFinished ? `<a href="apk/${item.uid}/${item.appName}.apk">Download</a>`:  item.processingError ? item.processingError  : item.processingStarted ? 'Building' : 'Queued'}</td></tr>`
           ))
 
 
@@ -147,6 +155,20 @@
 
       }, 3000);
 
+
+      $("#file").change((event) => {
+
+        const fr = new FileReader();
+
+        fr.readAsDataURL(document.querySelector("#file").files[0]);
+
+        fr.onloadend = (ev) => {
+          $('.box .img').html(`<img id="icon" src="${ev.target.result}" />`)
+        };
+
+
+      })
+
       $('form').submit((event) => {
         event.preventDefault();
 
@@ -154,25 +176,34 @@
           method: 'post',
           url: '/buildUrl',
           data: {
-            url: $('#url').val()
+            url: $('#url').val(),
+            name: $('#name').val(),
+            icon: $('#icon').attr('src'),
           }
         }).then((model) => {
+
+
+
 
           console.log(model);
           let history = [];
           if (localStorage.getItem('history')) {
             history = JSON.parse(localStorage.getItem('history'))
-
           }
-
           history.push(model);
-
           localStorage.setItem('history', JSON.stringify(history))
 
         }).fail((err) => {
           console.error(err);
         })
+
+
+        $('#url').val('')
+        $('#name').val('')
+
       })
+
+
 
     })
   </script>

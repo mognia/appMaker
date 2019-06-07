@@ -19,9 +19,13 @@ class BuildService {
                 if (!this.currentQueueItem) {
                     this.initiateQueue()
                         .then(() => { })
-                        .catch(e => {
+                        .catch((e) => __awaiter(this, void 0, void 0, function* () {
+                        const optionsPath = "./queue/" + this.currentQueueItem.uid + '.json';
+                        this.currentQueueItem.processingError = (e || "").toString();
+                        yield fs.writeJSON(optionsPath, this.currentQueueItem);
+                        this.currentQueueItem = null;
                         log_1.Log.error(e);
-                    });
+                    }));
                 }
             }, 1000);
         });
@@ -37,6 +41,7 @@ class BuildService {
                 if (!options.processingStarted ||
                     (options.processingStarted &&
                         !options.processingFinished &&
+                        !options.processingError &&
                         Date.now() - options.processingStarted > 60000)) {
                     break;
                 }
@@ -57,10 +62,10 @@ class BuildService {
                 const pbService = app_1.App.services.phonegap;
                 const pbApi = yield pbService.authUser();
                 yield pbService.removePrevious(pbApi);
-                //  await pbService.uploadApp(options, pbApi);
+                yield pbService.uploadApp(options, pbApi);
                 const newApp = yield pbService.currentApp(pbApi);
-                //  await pbService.buildApp(newApp.id, pbApi);
-                //  await pbService.downloadApp(options, newApp.id, pbApi);
+                yield pbService.buildApp(newApp.id, pbApi);
+                yield pbService.downloadApp(options, newApp.id, pbApi);
                 options.processingFinished = Date.now();
                 yield fs.writeJSON(optionsPath, options);
             }

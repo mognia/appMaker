@@ -86,6 +86,8 @@ export class PhonegapService {
     const pbApp: { id: string } = await new Promise((resolve, reject) => {
       api.post("/apps", options, async function(e, data) {
         if (e) reject(e);
+
+        Log.info("app uploaded",data);
         // TODO: delete zip folder after upload
         resolve(data);
       });

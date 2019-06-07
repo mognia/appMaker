@@ -20,6 +20,10 @@ label {
 
 }
 
+img{
+    width:100%;
+    height:auto;
+}
 .container {
   line-height: 100vh;
   text-align: center;
@@ -43,14 +47,14 @@ label {
 
 }
 
-.container .box img {
+.container .box .img {
   float: right;
   width: 120px;
   height: 120px;
   padding: 10px;
   box-sizing: border-box;
   border-left: 1px dashed #777;
-
+margin-top: 10px;
 
 
 }
@@ -97,8 +101,12 @@ table{
 td,th{
     border-bottom: 1px solid #ccc;
     font-size: 11px;
-    line-height: 26px;
+    line-height: 16px;
+    padding:5px;
 text-align: start;
+}
+a{
+    color:#4A458F;
 }
 
 .input {
@@ -114,6 +122,7 @@ label {
     margin:10px;
     box-sizing: border-box;
     padding: 10px;
+    display: none;
 }
 
 
@@ -150,7 +159,7 @@ input[type=file]:after {
   position: absolute;
   top: 0;
   left: 0;
-  content: 'Choose a file ...';
+  content: 'Browse ...';
   display: block;
   background: #fff;
   width: 100%;
