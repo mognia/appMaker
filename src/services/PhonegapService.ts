@@ -102,12 +102,12 @@ export class PhonegapService {
               }
               if (data.status.android === "error") {
                 clearInterval(refreshId);
-                Log.info("android build failed!");
+                Log.error("android build failed!", data);
                 reject();
               }
             }
           );
-        }, 5000);
+        }, 3000);
       });
     });
   }

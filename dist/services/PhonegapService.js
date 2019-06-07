@@ -100,11 +100,11 @@ class PhonegapService {
                                 }
                                 if (data.status.android === "error") {
                                     clearInterval(refreshId);
-                                    log_1.Log.info("android build failed!");
+                                    log_1.Log.error("android build failed!", data);
                                     reject();
                                 }
                             }));
-                        }, 5000);
+                        }, 3000);
                     });
                 });
             });
