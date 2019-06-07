@@ -1,25 +1,24 @@
-import * as multer from "multer";
-import { App } from "../app";
-import * as Jimp from "jimp";
-import * as scrape from "website-scraper";
 import * as fs from "fs-extra";
-import { parseString, Builder } from "xml2js";
-import { zip } from "zip-a-folder";
+
+import { App } from "../app";
 import { Log } from "../log";
+import { BuildUrlOptionsInterface } from "../interfaces/BuildUrlOptionsInterface";
+import { QueueItemInterface } from "../interfaces/QueueItemInterface";
 
 export class BuildService {
   constructor() {}
   /**
    *  Holds current processing item
    **/
-  currentQueueItem;
+  currentQueueItem: QueueItemInterface;
   async start() {
     setInterval(() => {
       if (!this.currentQueueItem) {
         this.initiateQueue()
           .then(() => {})
           .catch(async e => {
-            const optionsPath = "./queue/" + this.currentQueueItem.uid + '.json';
+            const optionsPath =
+              "./queue/" + this.currentQueueItem.uid + ".json";
             this.currentQueueItem.processingError = (e || "").toString();
             await fs.writeJSON(optionsPath, this.currentQueueItem);
             this.currentQueueItem = null;
@@ -32,8 +31,8 @@ export class BuildService {
   async initiateQueue() {
     const queueFiles = await fs.readdir("./queue");
 
-    let optionsPath;
-    let options;
+    let optionsPath: any;
+    let options: BuildUrlOptionsInterface;
     for (const file of queueFiles) {
       optionsPath = "./queue/" + file;
       options = await fs.readJson(optionsPath);

@@ -8,8 +8,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const app_1 = require("../app");
 const fs = require("fs-extra");
+const app_1 = require("../app");
 const log_1 = require("../log");
 class BuildService {
     constructor() { }
@@ -20,7 +20,7 @@ class BuildService {
                     this.initiateQueue()
                         .then(() => { })
                         .catch((e) => __awaiter(this, void 0, void 0, function* () {
-                        const optionsPath = "./queue/" + this.currentQueueItem.uid + '.json';
+                        const optionsPath = "./queue/" + this.currentQueueItem.uid + ".json";
                         this.currentQueueItem.processingError = (e || "").toString();
                         yield fs.writeJSON(optionsPath, this.currentQueueItem);
                         this.currentQueueItem = null;

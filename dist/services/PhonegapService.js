@@ -58,13 +58,13 @@ class PhonegapService {
                     }
                 }
             };
-            return new Promise((resolve, reject) => {
+            return new Promise((resolve, _reject) => {
                 api.post(`/apps/${id}/build`, options, function (e) {
                     return __awaiter(this, void 0, void 0, function* () {
                         if (e)
                             return assert_1.rejects(e);
                         let refreshId = setInterval(() => {
-                            api.get(`/apps/${id}`, (e, data) => __awaiter(this, void 0, void 0, function* () {
+                            api.get(`/apps/${id}`, (_e, data) => __awaiter(this, void 0, void 0, function* () {
                                 if (data.status.android === "complete") {
                                     clearInterval(refreshId);
                                     log_1.Log.info("android completed!");
@@ -77,8 +77,13 @@ class PhonegapService {
             });
         });
     }
+    /**
+     * Remove app from phonegap with ID
+     * @param id ID of app in phonegap build service
+     * @param api instance of phonegap API
+     */
     removeApp(id, api) {
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve, _reject) => {
             api.del(`/apps/${id}`, (e, data) => {
                 if (e)
                     return assert_1.rejects(e);
@@ -98,7 +103,7 @@ class PhonegapService {
                     file: `./temp/${opts.uid}/package.zip`
                 }
             };
-            const pbApp = yield new Promise((resolve, reject) => {
+            yield new Promise((resolve, reject) => {
                 api.post("/apps", options, function (e, data) {
                     return __awaiter(this, void 0, void 0, function* () {
                         if (e)
@@ -111,6 +116,12 @@ class PhonegapService {
             });
         });
     }
+    /**
+     * Download builded android app from phonegap to public/apk/{uid}/{appName}
+     * @param opts
+     * @param id ID of app in phonegap build services
+     * @param api phonegap API instance
+     */
     downloadApp(opts, id, api) {
         return __awaiter(this, void 0, void 0, function* () {
             yield fs.ensureDir(`./public/apk/${opts.uid}`);

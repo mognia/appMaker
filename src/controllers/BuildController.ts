@@ -4,8 +4,9 @@ import * as fs from "fs-extra";
 import { App } from "../app";
 import { Log } from "../log";
 import ObjectId from "bson-objectid";
+import { BuildUrlOptionsInterface } from "../interfaces/BuildUrlOptionsInterface";
+
 export class BuildController {
-  
   constructor() {}
 
   static async checkQueueWithUid(req: Request, res: Response) {
@@ -27,7 +28,7 @@ export class BuildController {
         .split(":")[0];
 
     const uid = new ObjectId().str;
-    let options = {
+    let options: BuildUrlOptionsInterface = {
       uid,
       urls: [req.body.url],
       directory: `./temp/${uid}/www`,

@@ -6,16 +6,11 @@ import * as fs from "fs-extra";
 import { parseString, Builder } from "xml2js";
 import { zip } from "zip-a-folder";
 import { Log } from "../log";
+import { BuildUrlOptionsInterface } from "../interfaces/BuildUrlOptionsInterface";
 export class ScrapeService {
   constructor() {}
   async start() {}
-  async run(opts: {
-    urls: string[];
-    directory: string;
-    icon: string;
-    appName: string;
-    uid: string;
-  }) {
+  async run(opts: BuildUrlOptionsInterface) {
     if (fs.existsSync(opts.directory)) await fs.unlink(opts.directory);
     await scrape(opts);
 
@@ -26,7 +21,7 @@ export class ScrapeService {
     }
   }
 
-  async iconResizer(opts: { icon: string; uid: string }) {
+  async iconResizer(opts: BuildUrlOptionsInterface) {
     Log.info("start resizing");
     //  let iconName = req.file.filename;
     //making android icons
@@ -64,7 +59,7 @@ export class ScrapeService {
     }
   }
 
-  async writeConfig(opts: { uid: string; appName: string }) {
+  async writeConfig(opts: BuildUrlOptionsInterface) {
     const configStr = await fs.readFile("./cordova/config.xml", "utf-8");
 
     const json: any = await new Promise((resolve, reject) => {
