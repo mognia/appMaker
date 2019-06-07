@@ -70,8 +70,8 @@ export class BuildService {
       this.currentQueueItem = options;
 
       let timeout = setTimeout(() => {
-        throw new Error("timeout limit");
-      }, 60000);
+        throw "timeout limit";
+      }, 180000);
 
       options.processingStarted = Date.now();
       await fs.writeJSON(optionsPath, options);
