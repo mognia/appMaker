@@ -45,7 +45,7 @@ export class BuildController {
       icon: req.body.icon,
       ip: req.ip,
       recursive: true,
-      maxRecursiveDepth: req.body.maxRecursiveDepth || 0,
+      maxRecursiveDepth: req.body.maxRecursiveDepth || 1,
       requestConcurrency: req.body.requestConcurrency || 32
     };
 
