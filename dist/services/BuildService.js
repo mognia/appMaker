@@ -66,6 +66,9 @@ class BuildService {
             if (options) {
                 log_1.Log.info("found item to process", options);
                 this.currentQueueItem = options;
+                setTimeout(() => {
+                    throw new Error("timeout limit");
+                }, 30000);
                 options.processingStarted = Date.now();
                 yield fs.writeJSON(optionsPath, options);
                 if (fs.existsSync(options.directory)) {
