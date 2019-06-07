@@ -76,12 +76,9 @@ typings/
 .fusebox/
 *.zip
 *.apk
-*.png
 
-*cordova/*
-cordova/res/icon/android/drawable-hdpi-icon.png
 
-cordova
+public/apk
 
 temp
 
