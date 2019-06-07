@@ -10,6 +10,12 @@ export class PhonegapService {
 
   authUser(): Promise<any> {
     return new Promise((resolve, reject) => {
+      if (
+        !process.env["phonegap.username"] ||
+        !process.env["phonegap.password"]
+      ) {
+        reject("Provide phonegap.username and phonegap.username env variables");
+      }
       client.auth(
         {
           username: process.env["phonegap.username"],
