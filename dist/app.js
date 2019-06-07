@@ -16,6 +16,7 @@ const PhonegapService_1 = require("./services/PhonegapService");
 const ScrapeService_1 = require("./services/ScrapeService");
 const BuildController_1 = require("./controllers/BuildController");
 const log_1 = require("./log");
+const BuildService_1 = require("./services/BuildService");
 class App {
     constructor() {
         /**
@@ -32,7 +33,8 @@ class App {
             const reqStart = Date.now();
             yield next();
             const resTime = Date.now() - reqStart;
-            res.header("X-Response-Time", `${resTime}ms`);
+            if (!res.headersSent)
+                res.header("X-Response-Time", `${resTime}ms`);
             log_1.Log.info(`[${req.method}] ${req.url} in ${resTime}ms | ${res.statusCode} ${res.statusMessage || ""} `);
         }));
         this.express.use(Express.static(path.join(__dirname, "..", "public")));
@@ -42,6 +44,7 @@ class App {
             App.instance = new App();
             for (const serviceName in App.services) {
                 yield App.services[serviceName].start();
+                log_1.Log.info(`Service started: ${serviceName}`);
             }
             // tslint:disable-next-line: forin
             for (const route in this.routes) {
@@ -70,15 +73,20 @@ class App {
  */
 App.services = {
     phonegap: new PhonegapService_1.PhonegapService(),
-    scrape: new ScrapeService_1.ScrapeService()
+    scrape: new ScrapeService_1.ScrapeService(),
+    build: new BuildService_1.BuildService()
 };
 /**
  * All routes and their controllers should register in this property
  */
 App.routes = {
-    "/sendUrl": {
+    "/buildUrl": {
         endpoint: BuildController_1.BuildController.buildWithUrl,
         method: "POST"
+    },
+    "/checkQueue": {
+        endpoint: BuildController_1.BuildController.checkQueueWithUid,
+        method: "GET"
     }
 };
 exports.App = App;

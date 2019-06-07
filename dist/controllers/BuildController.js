@@ -8,51 +8,43 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const multer = require("multer");
 const fs = require("fs-extra");
-const app_1 = require("../app");
 const log_1 = require("../log");
+const bson_objectid_1 = require("bson-objectid");
 class BuildController {
     constructor() { }
+    static checkQueueWithUid(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const itemPath = `./queue/${req.query.uid}.json`;
+            if (yield fs.pathExists(itemPath)) {
+                res.json(yield fs.readJSON(itemPath));
+            }
+            else {
+                res.sendStatus(404);
+                res.end();
+            }
+        });
+    }
     static buildWithUrl(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            yield new Promise((resolve, reject) => {
-                multer({
-                    storage: multer.diskStorage({
-                        destination: (req, file, cb) => cb(null, "./icons"),
-                        filename: (req, file, cb) => cb(null, file.originalname) // modified here  or user file.mimetype
-                    })
-                }).single("icon")(req, res, err => {
-                    if (err)
-                        return reject(err);
-                    resolve();
-                });
-            });
-            //validate user URL
-            log_1.Log.info(req.body.url);
+            const appName = req.body.name ||
+                req.body.url
+                    .split("//")[1]
+                    .split("/")[0]
+                    .split(":")[0];
+            const uid = new bson_objectid_1.default().str;
             let options = {
+                uid,
                 urls: [req.body.url],
-                directory: "./temp/www",
-                appName: "app-name-temp",
-                iconName: req.file ? req.file.filename : null
+                directory: `./temp/${uid}/www`,
+                appName: appName,
+                icon: req.body.icon,
+                ip: req.ip
             };
-            // Log.info();
-            if (fs.existsSync(options.directory)) {
-                yield fs.emptyDir(options.directory);
-                yield fs.rmdir(options.directory);
-            }
-            yield app_1.App.services.scrape.run(options);
-            const pbService = app_1.App.services.phonegap;
-            const pbApi = yield pbService.authUser();
-            yield pbService.removePrevious(pbApi);
-            yield pbService.uploadApp(pbApi);
-            const newApp = yield pbService.currentApp(pbApi);
-            yield pbService.buildApp(newApp.id, pbApi);
-            yield pbService.downloadApp(newApp.id, pbApi);
-            res.json({
-                success: true,
-                apk: `/readyApps/${"temp"}.apk`
-            });
+            log_1.Log.info("build request", options);
+            yield fs.ensureDir("./queue");
+            yield fs.writeJSON("./queue/" + uid + ".json", options);
+            res.json(options);
             //download whole website
             //auth user in phonegap build with token
         });

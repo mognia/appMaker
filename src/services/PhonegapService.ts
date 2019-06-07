@@ -45,20 +45,21 @@ export class PhonegapService {
         }
       }
     };
-    api.post(`/apps/${id}/build`, options, async function(e, data) {
-      Log.info("error:", e);
-      Log.info("data : ", data);
-      let refreshId = setInterval(function() {
-        api.get(`/apps/${id}`, async function(e, data) {
-          Log.info("data:", data);
-          if (data.status.android === "complete") {
-            clearInterval(refreshId);
-            Log.info("android compelete!");
 
-            await this.downloadApp(data.id, api);
-          }
-        });
-      }, 5000);
+    return new Promise((resolve, reject) => {
+      api.post(`/apps/${id}/build`, options, async function(e) {
+        if (e) return rejects(e);
+
+        let refreshId = setInterval(() => {
+          api.get(`/apps/${id}`, async (e, data) => {
+            if (data.status.android === "complete") {
+              clearInterval(refreshId);
+              Log.info("android completed!");
+              resolve();
+            }
+          });
+        }, 5000);
+      });
     });
   }
 
@@ -71,15 +72,14 @@ export class PhonegapService {
     });
   }
 
-  async uploadApp(api) {
+  async uploadApp(opts: { appName: string; uid: string }, api) {
     var options = {
       form: {
         data: {
-          // TODO: get title from URL
-          title: "My App",
+          title: opts.appName,
           create_method: "file"
         },
-        file: "./temp.zip"
+        file: `./temp/${opts.uid}/package.zip`
       }
     };
 
@@ -92,8 +92,15 @@ export class PhonegapService {
     });
   }
 
-  async downloadApp(id, api): Promise<{ success: boolean; apk: string }> {
-    let file = fs.createWriteStream(`./readyApps/${"temp"}.apk`);
+  async downloadApp(
+    opts: { appName: string; uid: string },
+    id,
+    api
+  ): Promise<{ success: boolean; apk: string }> {
+    await fs.ensureDir(`./public/apk/${opts.uid}`);
+    let file = fs.createWriteStream(
+      `./public/apk/${opts.uid}/${opts.appName}.apk`
+    );
     await api.get(`/apps/${id}/android`).pipe(file);
 
     return new Promise((resolve, reject) => {

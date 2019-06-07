@@ -3,55 +3,47 @@ import { Request, Response } from "express";
 import * as fs from "fs-extra";
 import { App } from "../app";
 import { Log } from "../log";
-
+import ObjectId from "bson-objectid";
 export class BuildController {
+  
   constructor() {}
 
-  static async buildWithUrl(req: Request, res: Response) {
-    await new Promise((resolve, reject) => {
-      multer({
-        storage: multer.diskStorage({
-          destination: (req, file, cb) => cb(null, "./icons"),
-          filename: (req, file, cb) => cb(null, file.originalname) // modified here  or user file.mimetype
-        })
-      }).single("icon")(req, res, err => {
-        if (err) return reject(err);
-        resolve();
-      });
-    });
-    //validate user URL
-    Log.info(req.body.url);
-
-    let options = {
-      urls: [req.body.url],
-      directory: "./temp/www",
-      appName: "app-name-temp",
-      iconName: req.file ? req.file.filename : null
-    };
-    // Log.info();
-
-    if (fs.existsSync(options.directory)) {
-      await fs.emptyDir(options.directory);
-      await fs.rmdir(options.directory);
+  static async checkQueueWithUid(req: Request, res: Response) {
+    const itemPath = `./queue/${req.query.uid}.json`;
+    if (await fs.pathExists(itemPath)) {
+      res.json(await fs.readJSON(itemPath));
+    } else {
+      res.sendStatus(404);
+      res.end();
     }
+  }
 
-    await App.services.scrape.run(options);
+  static async buildWithUrl(req: Request, res: Response) {
+    const appName =
+      req.body.name ||
+      req.body.url
+        .split("//")[1]
+        .split("/")[0]
+        .split(":")[0];
 
-    const pbService = App.services.phonegap;
-    const pbApi = await pbService.authUser();
-    await pbService.removePrevious(pbApi);
+    const uid = new ObjectId().str;
+    let options = {
+      uid,
+      urls: [req.body.url],
+      directory: `./temp/${uid}/www`,
+      appName: appName,
+      icon: req.body.icon,
+      ip: req.ip
+    };
 
-    await pbService.uploadApp(pbApi);
+    Log.info("build request", options);
 
-    const newApp = await pbService.currentApp(pbApi);
+    await fs.ensureDir("./queue");
 
-    await pbService.buildApp(newApp.id, pbApi);
-    await pbService.downloadApp(newApp.id, pbApi);
+    await fs.writeJSON("./queue/" + uid + ".json", options);
 
-    res.json({
-      success: true,
-      apk: `/readyApps/${"temp"}.apk`
-    });
+    res.json(options);
+
     //download whole website
 
     //auth user in phonegap build with token

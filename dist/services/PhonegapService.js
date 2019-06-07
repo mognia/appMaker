@@ -58,22 +58,21 @@ class PhonegapService {
                     }
                 }
             };
-            api.post(`/apps/${id}/build`, options, function (e, data) {
-                return __awaiter(this, void 0, void 0, function* () {
-                    log_1.Log.info("error:", e);
-                    log_1.Log.info("data : ", data);
-                    let refreshId = setInterval(function () {
-                        api.get(`/apps/${id}`, function (e, data) {
-                            return __awaiter(this, void 0, void 0, function* () {
-                                log_1.Log.info("data:", data);
+            return new Promise((resolve, reject) => {
+                api.post(`/apps/${id}/build`, options, function (e) {
+                    return __awaiter(this, void 0, void 0, function* () {
+                        if (e)
+                            return assert_1.rejects(e);
+                        let refreshId = setInterval(() => {
+                            api.get(`/apps/${id}`, (e, data) => __awaiter(this, void 0, void 0, function* () {
                                 if (data.status.android === "complete") {
                                     clearInterval(refreshId);
-                                    log_1.Log.info("android compelete!");
-                                    yield this.downloadApp(data.id, api);
+                                    log_1.Log.info("android completed!");
+                                    resolve();
                                 }
-                            });
-                        });
-                    }, 5000);
+                            }));
+                        }, 5000);
+                    });
                 });
             });
         });
@@ -88,16 +87,15 @@ class PhonegapService {
             });
         });
     }
-    uploadApp(api) {
+    uploadApp(opts, api) {
         return __awaiter(this, void 0, void 0, function* () {
             var options = {
                 form: {
                     data: {
-                        // TODO: get title from URL
-                        title: "My App",
+                        title: opts.appName,
                         create_method: "file"
                     },
-                    file: "./temp.zip"
+                    file: `./temp/${opts.uid}/package.zip`
                 }
             };
             const pbApp = yield new Promise((resolve, reject) => {
@@ -112,9 +110,10 @@ class PhonegapService {
             });
         });
     }
-    downloadApp(id, api) {
+    downloadApp(opts, id, api) {
         return __awaiter(this, void 0, void 0, function* () {
-            let file = fs.createWriteStream(`./readyApps/${"temp"}.apk`);
+            yield fs.ensureDir(`./public/apk/${opts.uid}`);
+            let file = fs.createWriteStream(`./public/apk/${opts.uid}/${opts.appName}.apk`);
             yield api.get(`/apps/${id}/android`).pipe(file);
             return new Promise((resolve, reject) => {
                 file.on("error", e => reject(e));

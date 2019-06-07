@@ -7,6 +7,7 @@ import { PhonegapService } from "./services/PhonegapService";
 import { ScrapeService } from "./services/ScrapeService";
 import { BuildController } from "./controllers/BuildController";
 import { Log } from "./log";
+import { BuildService } from "./services/BuildService";
 
 export class App {
   /**
@@ -24,7 +25,8 @@ export class App {
    */
   static services = {
     phonegap: new PhonegapService(),
-    scrape: new ScrapeService()
+    scrape: new ScrapeService(),
+    build: new BuildService()
   };
 
   /**
@@ -37,9 +39,13 @@ export class App {
       method: "POST" | "GET";
     };
   } = {
-    "/sendUrl": {
+    "/buildUrl": {
       endpoint: BuildController.buildWithUrl,
       method: "POST"
+    },
+    "/checkQueue": {
+      endpoint: BuildController.checkQueueWithUid,
+      method: "GET"
     }
   };
 
@@ -59,7 +65,7 @@ export class App {
       await next();
       const resTime = Date.now() - reqStart;
 
-      res.header("X-Response-Time", `${resTime}ms`);
+      if (!res.headersSent) res.header("X-Response-Time", `${resTime}ms`);
       Log.info(
         `[${req.method}] ${req.url} in ${resTime}ms | ${
           res.statusCode
@@ -75,6 +81,7 @@ export class App {
 
     for (const serviceName in App.services) {
       await App.services[serviceName].start();
+      Log.info(`Service started: ${serviceName}`);
     }
 
     // tslint:disable-next-line: forin

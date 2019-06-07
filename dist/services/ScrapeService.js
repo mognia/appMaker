@@ -8,7 +8,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const app_1 = require("../app");
 const Jimp = require("jimp");
 const scrape = require("website-scraper");
 const fs = require("fs-extra");
@@ -25,16 +24,16 @@ class ScrapeService {
             if (fs.existsSync(opts.directory))
                 yield fs.unlink(opts.directory);
             yield scrape(opts);
-            if (opts.iconName)
-                yield this.iconResizer(opts.iconName);
+            if (opts.icon)
+                yield this.iconResizer(opts.icon);
         });
     }
-    iconResizer(iconName) {
+    iconResizer(icon) {
         return __awaiter(this, void 0, void 0, function* () {
             log_1.Log.info("start resizing");
             //  let iconName = req.file.filename;
             //making android icons
-            const jimp = yield Jimp.read(`./icons/${iconName}`);
+            const jimp = yield Jimp.read(new Buffer(icon, "base64"));
             const neededIcons = {
                 36: "ldpi",
                 48: "mdpi",
@@ -71,11 +70,10 @@ class ScrapeService {
             // our json back to xml.
             var builder = new xml2js_1.Builder();
             var xml = builder.buildObject(json);
-            yield fs.writeFile("./cordova/config.xml", xml);
+            yield fs.writeFile(`./temp/${opts.uid}/config.xml`, xml);
             log_1.Log.info("successfully written our update xml to file");
             log_1.Log.info("start zipping");
-            yield zip_a_folder_1.zip("./temp", "./temp.zip");
-            yield app_1.App.services.phonegap.authUser();
+            yield zip_a_folder_1.zip(`./temp/${opts.uid}`, `./temp/${opts.uid}/package.zip`);
         });
     }
 }

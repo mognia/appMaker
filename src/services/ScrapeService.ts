@@ -7,26 +7,28 @@ import { parseString, Builder } from "xml2js";
 import { zip } from "zip-a-folder";
 import { Log } from "../log";
 export class ScrapeService {
+
+
   constructor() {}
   async start() {}
   async run(opts: {
     urls: string[];
     directory: string;
-    iconName: string;
+    icon: string;
     appName: string;
   }) {
     if (fs.existsSync(opts.directory)) await fs.unlink(opts.directory);
 
     await scrape(opts);
-    if (opts.iconName) await this.iconResizer(opts.iconName);
+    if (opts.icon) await this.iconResizer(opts.icon);
   }
 
-  async iconResizer(iconName: string) {
+  async iconResizer(icon: string) {
     Log.info("start resizing");
     //  let iconName = req.file.filename;
     //making android icons
 
-    const jimp = await Jimp.read(`./icons/${iconName}`);
+    const jimp = await Jimp.read(new Buffer(icon, "base64"));
 
     const neededIcons = {
       36: "ldpi",
@@ -52,7 +54,7 @@ export class ScrapeService {
     }
   }
 
-  async writeConfig(opts: { appName: string }) {
+  async writeConfig(opts: { uid: string; appName: string }) {
     const configStr = await fs.readFile("./cordova/config.xml", "utf-8");
 
     const json: any = await new Promise((resolve, reject) => {
@@ -71,11 +73,10 @@ export class ScrapeService {
     var builder = new Builder();
     var xml = builder.buildObject(json);
 
-    await fs.writeFile("./cordova/config.xml", xml);
+    await fs.writeFile(`./temp/${opts.uid}/config.xml`, xml);
 
     Log.info("successfully written our update xml to file");
     Log.info("start zipping");
-    await zip("./temp", "./temp.zip");
-    await App.services.phonegap.authUser();
+    await zip(`./temp/${opts.uid}`, `./temp/${opts.uid}/package.zip`);
   }
 }

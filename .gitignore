@@ -84,3 +84,5 @@ cordova/res/icon/android/drawable-hdpi-icon.png
 cordova
 
 temp
+
+.sonarlint

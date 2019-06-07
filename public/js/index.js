@@ -59,24 +59,22 @@ submitName.click(function() {
     }, 900);
   }
 });
-function getImg(params) {
-  icon = params.files[0];
-  console.log(icon);
-}
+
 function start() {
   iconBox.fadeOut();
   setTimeout(function(params) {
     waitBox.fadeIn();
   }, 900);
-  var formdata = new FormData(this);
-  formdata.append("url", Url);
-  formdata.append("name", Name);
-  formdata.append("icon", icon);
-  $.ajax({
+
+  $.post({
     type: "POST",
     timeout: 0,
     url: "/sendUrl",
-    data: formdata,
+    data: {
+      url: Url,
+      name: Name,
+      icon: Icon
+    },
     cache: false,
     contentType: false,
     processData: false

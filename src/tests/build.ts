@@ -21,5 +21,5 @@ describe("build scenarios", () => {
         done();
       }
     );
-  }).timeout(10000);
+  }).timeout(0);
 });

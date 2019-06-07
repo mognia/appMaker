@@ -17,5 +17,5 @@ describe("build scenarios", () => {
             console.log(err, body);
             done();
         });
-    }).timeout(10000);
+    }).timeout(0);
 });

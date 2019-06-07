@@ -5,122 +5,177 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Document</title>
-  <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="./css/style.css">
-  <link rel="stylesheet" href="./css/spiner.css">
-  <link rel="stylesheet" href="./css/dlBtn.css">
+  <title>Hybrid App Maker</title>
+
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-  <div class="container-fluid">
-    <div class=" row ">
-      <div class="centBox align-items-center" id="centBox">
-        <!-- URL input box -->
-        <div class="inputBar" id="urlBox">
-          <p>لطفا آدرس وب سایت مورد نظر را وارد کنید</p>
-          <div class="input-group mb-3">
-            <input type="text" id="urlInput" class="form-control" placeholder="Website URL"
-              aria-label="Recipient's username" aria-describedby="button-addon2">
-            <div class="input-group-append">
-              <button class="btn btn-outline-secondary" id="submit-url" type="button" id="button-addon2"><i
-                  class="fas fa-arrow-right"></i></button>
-            </div>
-          </div>
-          <div class="alert alert-danger ErrAlert" id="urlErrAlert" role="alert"></div>
-        </div>
-        <!-- /URL input box -->
-        <!-- name Box -->
-        <div class="inputBar" id="detailBox" style="display: none">
-          <p>نام اپلیکشن خود را وارد کنید</p>
-          <div class="input-group mb-3">
-            <input type="text" id="NameInput" class="form-control" placeholder="Application Name"
-              aria-label="Recipient's username" aria-describedby="button-addon2">
-            <div class="input-group-append">
-              <button class="btn btn-outline-secondary" id="submit-name" type="button" id="button-addon2"><i
-                  class="fas fa-arrow-right"></i></button>
-            </div>
-          </div>
-          <div class="alert alert-danger ErrAlert" id="nameErrAlert" role="alert"> </div>
-        </div>
-        <!-- /name Box -->
-        <!-- Icon Box -->
-        <div class="inputBar" id="iconBox" style="display: none">
-          <p>آیکن اپلیکیشن خود را وارد کنید</p>
+  <div class="container">
+    <div class="box">
 
-          <div class="file-upload">
-            <button class="file-upload-btn" type="button" onclick="$('.file-upload-input').trigger( 'click' )">انتخاب
-              عکس</button>
+      <div class="inner">
 
-            <div class="image-upload-wrap">
-              <input class="file-upload-input" type='file' onchange="readURL(this);getImg(this);" accept="image/*" />
-              <div class="drag-text">
-                <h3>فایل خود را اینجا قرار دهید</h3>
-              </div>
-            </div>
-            <div class="file-upload-content">
-              <img class="file-upload-image" src="#" alt="your image" />
-              <div class="image-title-wrap">
-                <div class="btn-group btn-group-lg" role="group" aria-label="...">
-                  <button type="button" id="startProcess" onclick="start()" class="btn btn-outline-success">
-                    <p style="display: inline">شروع پروسه</p>
-                    <i class="fas fa-arrow-right"></i>
-                  </button>
-                </div>
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- /Icon Box -->
-        <!-- wait Box -->
-        <div class="inputBar" id="waitBox" style="display: none">
-          <p>درحال تبدیل وبسایت شما به اپلیکیشن</p>
-          <div class="whirlpool">
-            <div class="ring ring1"></div>
-            <div class="ring ring2"></div>
-            <div class="ring ring3"></div>
-            <div class="ring ring4"></div>
-            <div class="ring ring5"></div>
-            <div class="ring ring6"></div>
-            <div class="ring ring7"></div>
-            <div class="ring ring8"></div>
-            <div class="ring ring9"></div>
-          </div>
-        </div>
-        <!-- /wait Box -->
-        <!-- Download Box -->
-        <div class="inputBar" id="downloadBox" style="display: none">
-          <p>تبریک! اپلیکیشن شما حاضر است</p>
-          <a href="#" id="dlBtn" class='button button4'>Download Me!</a>
-        </div>
-        <!-- /Download Box -->
-        <div class="inputBar" id="failBox" style="display: none">
-        <p>متاسفانه درحین پروسه خطایی رخ داده است</p>
-        <div class="sadFace">
-            <i class="far fa-frown"></i>
-        </div>
+        <div class="title">
+        <h1>Hybrid App Maker</h1>
+        <small>Just a URL needed</small>
+
       </div>
+
+        <form action="">
+
+          <div class="input">
+            <label for="">Name</label>
+            <input type="text" id="name" placeholder="Your application name" />
+          </div>
+
+          <div class="input">
+            <label for="">URL</label>
+            <input type="text" id="url" placeholder="address of website you want to convert" />
+          </div>
+
+          <div class="input">
+            <label for="">Icon</label>
+            <input type="file" id="icon" />
+          </div>
+
+          <button type="submit">
+            Build my app
+          </button>
+        </form>
+
+
+
+        <div class="clear"></div>
+        <div class="history">
+          <table>
+            <thead>
+              <th>
+                Name
+              </th>
+              <th>URL</th>
+              <th>Status</th>
+            </thead>
+
+            <tbody>
+              <tr>
+                <td colspan="3">
+                  Getting history ...
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-  <script src="https://code.jquery.com/jquery-3.4.1.min.js"
-    integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+  <script src="jquery-3.4.1.min.js">
+  </script>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-    crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-    crossorigin="anonymous"></script>
+  <script>
+    $(function () {
+
+      setInterval(() => {
+        let history = [];
+        if (localStorage.getItem('history')) {
+          history = JSON.parse(localStorage.getItem('history'))
+
+        }
+
+        if (history.length == 0) {
+          $('.history').hide();
+          return;
+        }
+
+        $('.history').show();
+
+        $('.history tbody').html('');
+
+        console.log(history);
+
+        for (const item of history) {
+          $('.history table tbody').append($(
+            `<tr><td>${item.appName}</td><td>${item.urls}</td><td>${item.processingFinished ? '<a href="">Download</a>' : item.processingStarted ? 'Building' : 'Queued'}</td></tr>`
+          ))
+
+
+          if (!item.processingFinished) {
+
+            $.ajax({
+              method: 'get',
+              url: '/checkQueue',
+              data: {
+                uid: item.uid
+              }
+            }).then((model) => {
+
+              let history = [];
+
+
+              if (localStorage.getItem('history')) {
+                history = JSON.parse(localStorage.getItem('history'))
+              }
+              history = history.map((historyItem) => {
+
+                if (item.uid == historyItem.uid)
+                  return model;
+
+                return historyItem;
+              })
+
+
+              localStorage.setItem('history', JSON.stringify(history))
+
+            }).fail((err) => {
+              console.error(err);
+
+              if (err.status == 404) {
+                history = history.filter((historyItem) => {
+
+                  if (item.uid == historyItem.uid)
+                    return false;
+
+                  return true;
+                })
+                localStorage.setItem('history', JSON.stringify(history))
+              }
+            })
+          }
+
+        }
+
+      }, 3000);
+
+      $('form').submit((event) => {
+        event.preventDefault();
+
+        $.ajax({
+          method: 'post',
+          url: '/buildUrl',
+          data: {
+            url: $('#url').val()
+          }
+        }).then((model) => {
+
+          console.log(model);
+          let history = [];
+          if (localStorage.getItem('history')) {
+            history = JSON.parse(localStorage.getItem('history'))
+
+          }
+
+          history.push(model);
+
+          localStorage.setItem('history', JSON.stringify(history))
+
+        }).fail((err) => {
+          console.error(err);
+        })
+      })
+
+    })
+  </script>
 </body>
-
-<script src="./js/index.js"></script>
-<script src="./js/uploader.js"></script>
 
 </html>
