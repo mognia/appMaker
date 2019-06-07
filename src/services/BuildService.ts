@@ -71,10 +71,6 @@ export class BuildService {
       Log.info("found item to process", options);
       this.currentQueueItem = options;
 
-      let timeout = setTimeout(() => {
-        throw "timeout limit";
-      }, 180000);
-
       options.processingStarted = Date.now();
       await fs.writeJSON(optionsPath, options);
 
@@ -84,6 +80,7 @@ export class BuildService {
       }
 
       await App.services.scrape.runScrapper(options);
+
       await App.services.scrape.writeConfig(options);
 
       const pbService = App.services.phonegap;
@@ -101,8 +98,6 @@ export class BuildService {
       await fs.writeJSON(optionsPath, options);
 
       this.currentQueueItem = null;
-
-      clearTimeout(timeout);
     }
   }
 }

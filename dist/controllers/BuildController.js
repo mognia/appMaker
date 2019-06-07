@@ -50,8 +50,8 @@ class BuildController {
                 icon: req.body.icon,
                 ip: req.ip,
                 recursive: true,
-                maxRecursiveDepth: 3,
-                requestConcurrency: 8
+                maxRecursiveDepth: req.body.maxRecursiveDepth || 2,
+                requestConcurrency: req.body.requestConcurrency || 32
             };
             log_1.Log.info("build request", options);
             yield fs.ensureDir("./queue");
