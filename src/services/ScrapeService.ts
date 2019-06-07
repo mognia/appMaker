@@ -27,15 +27,16 @@ export class ScrapeService {
       ...{
         urlFilter: (url: string) => {
           const urlValid =
-            url.indexOf("cdn.jsdelivr.com") !== -1 ||
-            url.indexOf("fonts.googleapis.com") !== -1 ||
-            url.indexOf("ajax.cloudflare.com") !== -1 ||
-            url.indexOf("cdnjs.cloudflare.com") !== -1 ||
-            url.indexOf("stackpath.bootstrapcdn.com") !== -1 ||
-            url.indexOf("code.jquery.com") !== -1 ||
-            !url.startsWith("http") ||
-            url.replace("https://", "http://").startsWith(opts.urls[0]) ||
-            url.replace("http://", "https://").startsWith(opts.urls[0]);
+            (url.indexOf("cdn.jsdelivr.com") !== -1 ||
+              url.indexOf("fonts.googleapis.com") !== -1 ||
+              url.indexOf("ajax.cloudflare.com") !== -1 ||
+              url.indexOf("cdnjs.cloudflare.com") !== -1 ||
+              url.indexOf("stackpath.bootstrapcdn.com") !== -1 ||
+              url.indexOf("code.jquery.com") !== -1 ||
+              !url.startsWith("http") ||
+              url.replace("https://", "http://").startsWith(opts.urls[0]) ||
+              url.replace("http://", "https://").startsWith(opts.urls[0])) &&
+            url.indexOf("search=") === -1;
           Log.info("url filter", url, urlValid);
           return urlValid;
         }

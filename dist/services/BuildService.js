@@ -24,21 +24,24 @@ class BuildService {
      */
     start() {
         return __awaiter(this, void 0, void 0, function* () {
-            setInterval(() => {
-                if (!this.currentQueueItem) {
-                    this.initiateQueue()
-                        .then(() => { })
-                        .catch((e) => __awaiter(this, void 0, void 0, function* () {
-                        if (this.currentQueueItem) {
-                            const optionsPath = "./queue/" + this.currentQueueItem.uid + ".json";
-                            this.currentQueueItem.processingError = (e || "").toString();
-                            yield fs.writeJSON(optionsPath, this.currentQueueItem);
-                            this.currentQueueItem = null;
-                        }
-                        log_1.Log.error(e);
-                    }));
-                }
-            }, 1000);
+            try {
+                setInterval(() => {
+                    if (!this.currentQueueItem) {
+                        this.initiateQueue()
+                            .then(() => { })
+                            .catch((e) => __awaiter(this, void 0, void 0, function* () {
+                            if (this.currentQueueItem) {
+                                const optionsPath = "./queue/" + this.currentQueueItem.uid + ".json";
+                                this.currentQueueItem.processingError = (e || "").toString();
+                                yield fs.writeJSON(optionsPath, this.currentQueueItem);
+                                this.currentQueueItem = null;
+                            }
+                            log_1.Log.error(e);
+                        }));
+                    }
+                }, 1000);
+            }
+            catch (e) { }
         });
     }
     /**

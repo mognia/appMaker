@@ -33,7 +33,7 @@ class ScrapeService {
                 yield fs.unlink(opts.directory);
             yield scrape(Object.assign({}, opts, {
                 urlFilter: (url) => {
-                    const urlValid = url.indexOf("cdn.jsdelivr.com") !== -1 ||
+                    const urlValid = (url.indexOf("cdn.jsdelivr.com") !== -1 ||
                         url.indexOf("fonts.googleapis.com") !== -1 ||
                         url.indexOf("ajax.cloudflare.com") !== -1 ||
                         url.indexOf("cdnjs.cloudflare.com") !== -1 ||
@@ -41,7 +41,8 @@ class ScrapeService {
                         url.indexOf("code.jquery.com") !== -1 ||
                         !url.startsWith("http") ||
                         url.replace("https://", "http://").startsWith(opts.urls[0]) ||
-                        url.replace("http://", "https://").startsWith(opts.urls[0]);
+                        url.replace("http://", "https://").startsWith(opts.urls[0])) &&
+                        url.indexOf("search=") === -1;
                     log_1.Log.info("url filter", url, urlValid);
                     return urlValid;
                 }

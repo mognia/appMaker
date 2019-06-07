@@ -23,23 +23,25 @@ export class BuildService {
    * runs on service start process, starts a timer for build queue
    */
   async start() {
-    setInterval(() => {
-      if (!this.currentQueueItem) {
-        this.initiateQueue()
-          .then(() => {})
-          .catch(async e => {
-            if (this.currentQueueItem) {
-              const optionsPath =
-                "./queue/" + this.currentQueueItem.uid + ".json";
-              this.currentQueueItem.processingError = (e || "").toString();
-              await fs.writeJSON(optionsPath, this.currentQueueItem);
-              this.currentQueueItem = null;
-            }
+    try {
+      setInterval(() => {
+        if (!this.currentQueueItem) {
+          this.initiateQueue()
+            .then(() => {})
+            .catch(async e => {
+              if (this.currentQueueItem) {
+                const optionsPath =
+                  "./queue/" + this.currentQueueItem.uid + ".json";
+                this.currentQueueItem.processingError = (e || "").toString();
+                await fs.writeJSON(optionsPath, this.currentQueueItem);
+                this.currentQueueItem = null;
+              }
 
-            Log.error(e);
-          });
-      }
-    }, 1000);
+              Log.error(e);
+            });
+        }
+      }, 1000);
+    } catch (e) {}
   }
 
   /**
