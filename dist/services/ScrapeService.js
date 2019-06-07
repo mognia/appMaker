@@ -1,4 +1,7 @@
 "use strict";
+/**
+ * @module Scrape
+ */
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
@@ -19,17 +22,27 @@ class ScrapeService {
     start() {
         return __awaiter(this, void 0, void 0, function* () { });
     }
-    run(opts) {
+    /**
+     * runs website scrapper against provided URLs in build request options
+     * default icon will be copied and if icon is provided in options we will start resizing
+     * @param opts
+     */
+    runScrapper(opts) {
         return __awaiter(this, void 0, void 0, function* () {
             if (fs.existsSync(opts.directory))
                 yield fs.unlink(opts.directory);
             yield scrape(opts);
+            // copy default icons
             yield fs.copy("./cordova/res", `./temp/${opts.uid}/res`);
             if (opts.icon) {
                 yield this.iconResizer(opts);
             }
         });
     }
+    /**
+     * Resize needed icons using base64 data string image icon provided in build request
+     * @param opts
+     */
     iconResizer(opts) {
         return __awaiter(this, void 0, void 0, function* () {
             log_1.Log.info("start resizing");

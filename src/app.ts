@@ -1,3 +1,6 @@
+/**
+ * @module Core
+ */
 import * as bodyParser from "body-parser";
 import * as cors from "cors";
 import * as Express from "express";
@@ -60,11 +63,10 @@ export class App {
 
     // Set Static Folder
 
-    this.express.use(async (req, res, next) => {
+    this.express.use(async (req, res, next: any) => {
       const reqStart = Date.now();
       await next();
       const resTime = Date.now() - reqStart;
-
       if (!res.headersSent) res.header("X-Response-Time", `${resTime}ms`);
       Log.info(
         `[${req.method}] ${req.url} in ${resTime}ms | ${

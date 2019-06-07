@@ -1,4 +1,7 @@
 "use strict";
+/**
+ * @module Tests
+ */
 Object.defineProperty(exports, "__esModule", { value: true });
 const request = require("request");
 const dotenv = require("dotenv");

@@ -1,5 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+/**
+ * @module Core
+ */
 const chalk_1 = require("chalk");
 class Log {
     static get dateString() {

@@ -11,8 +11,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const fs = require("fs-extra");
 const log_1 = require("../log");
 const bson_objectid_1 = require("bson-objectid");
+/**
+ * This controller is responsible for build endpoints
+ */
 class BuildController {
-    constructor() { }
     static checkQueueWithUid(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const itemPath = `./queue/${req.query.uid}.json`;

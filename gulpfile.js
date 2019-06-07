@@ -54,7 +54,7 @@ function typedoc() {
 
       // TypeDoc options (see typedoc docs)
       name: "Hybrid App Maker",
-      theme: "minimal",
+      theme: "default",
       //  theme: "markdown",
       ignoreCompilerErrors: false,
       version: true

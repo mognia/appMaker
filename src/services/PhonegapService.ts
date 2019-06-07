@@ -1,13 +1,25 @@
+/**
+ * @module Phonegap
+ */
+
 import * as client from "phonegap-build-api";
 import * as fs from "fs-extra";
 import { rejects } from "assert";
 import { resolve } from "path";
 import { Log } from "../log";
 import { BuildUrlOptionsInterface } from "../interfaces/BuildUrlOptionsInterface";
+
+/**
+ * Responsible for communicating with phonegap build API
+ */
 export class PhonegapService {
   constructor() {}
   async start() {}
 
+  /**
+   * Authenticate with phonegap build API using username and password
+   * @returns instance of phonegap build API
+   */
   authUser(): Promise<any> {
     return new Promise((resolve, reject) => {
       if (
@@ -29,6 +41,11 @@ export class PhonegapService {
     });
   }
 
+  /**
+   * returns current private app on phonegap
+   * @returns app id
+   * @param api instace of phonegap build API
+   */
   async currentApp(api: {
     get: (arg0: string, arg1: (e: any, data: any) => Promise<void>) => void;
   }): Promise<{ id: string }> {
@@ -44,11 +61,21 @@ export class PhonegapService {
     });
   }
 
+  /**
+   * remove previous private app from phonegap build API
+   * @param api instance of phonegap build API
+   */
+
   async removePrevious(api: any) {
     const currentApp = await this.currentApp(api);
     if (currentApp) await this.removeApp(currentApp.id, api);
   }
 
+  /**
+   * request build to phonegap using app id
+   * @param id id of phonegap app
+   * @param api  instance of phonegap build API
+   */
   async buildApp(id: string, api: any) {
     var options = {
       form: {
@@ -100,6 +127,11 @@ export class PhonegapService {
     });
   }
 
+  /**
+   * Uploads zipped package of app to phonegap
+   * @param opts
+   * @param api
+   */
   async uploadApp(
     opts: BuildUrlOptionsInterface,
     api: {

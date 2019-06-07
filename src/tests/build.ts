@@ -1,3 +1,7 @@
+/**
+ * @module Tests
+ */
+
 import * as request from "request";
 import * as assert from "assert";
 import * as dotenv from "dotenv";

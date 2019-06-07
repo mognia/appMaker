@@ -1,3 +1,6 @@
+/**
+ * @module Build
+ */
 import * as multer from "multer";
 import { Request, Response } from "express";
 import * as fs from "fs-extra";
@@ -6,9 +9,10 @@ import { Log } from "../log";
 import ObjectId from "bson-objectid";
 import { BuildUrlOptionsInterface } from "../interfaces/BuildUrlOptionsInterface";
 
+/**
+ * This controller is responsible for build endpoints
+ */
 export class BuildController {
-  constructor() {}
-
   static async checkQueueWithUid(req: Request, res: Response) {
     const itemPath = `./queue/${req.query.uid}.json`;
     if (await fs.pathExists(itemPath)) {

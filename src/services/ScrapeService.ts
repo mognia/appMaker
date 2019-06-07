@@ -1,3 +1,7 @@
+/**
+ * @module Scrape
+ */
+
 import * as multer from "multer";
 import { App } from "../app";
 import * as Jimp from "jimp";
@@ -10,10 +14,18 @@ import { BuildUrlOptionsInterface } from "../interfaces/BuildUrlOptionsInterface
 export class ScrapeService {
   constructor() {}
   async start() {}
-  async run(opts: BuildUrlOptionsInterface) {
+
+  /**
+   * runs website scrapper against provided URLs in build request options
+   * default icon will be copied and if icon is provided in options we will start resizing
+   * @param opts
+   */
+  public async runScrapper(opts: BuildUrlOptionsInterface) {
     if (fs.existsSync(opts.directory)) await fs.unlink(opts.directory);
+
     await scrape(opts);
 
+    // copy default icons
     await fs.copy("./cordova/res", `./temp/${opts.uid}/res`);
 
     if (opts.icon) {
@@ -21,7 +33,11 @@ export class ScrapeService {
     }
   }
 
-  async iconResizer(opts: BuildUrlOptionsInterface) {
+  /**
+   * Resize needed icons using base64 data string image icon provided in build request
+   * @param opts
+   */
+  private async iconResizer(opts: BuildUrlOptionsInterface) {
     Log.info("start resizing");
     //  let iconName = req.file.filename;
     //making android icons

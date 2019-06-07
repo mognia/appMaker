@@ -1,4 +1,7 @@
 "use strict";
+/**
+ * @module Build
+ */
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
@@ -11,8 +14,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const fs = require("fs-extra");
 const app_1 = require("../app");
 const log_1 = require("../log");
+/**
+ * Responsible for Queueing build requests
+ */
 class BuildService {
     constructor() { }
+    /**
+     * runs on service start process, starts a timer for build queue
+     */
     start() {
         return __awaiter(this, void 0, void 0, function* () {
             setInterval(() => {
@@ -30,6 +39,9 @@ class BuildService {
             }, 1000);
         });
     }
+    /**
+     * proceed queue by one
+     */
     initiateQueue() {
         return __awaiter(this, void 0, void 0, function* () {
             const queueFiles = yield fs.readdir("./queue");
@@ -57,7 +69,7 @@ class BuildService {
                     yield fs.emptyDir(options.directory);
                     yield fs.rmdir(options.directory);
                 }
-                yield app_1.App.services.scrape.run(options);
+                yield app_1.App.services.scrape.runScrapper(options);
                 yield app_1.App.services.scrape.writeConfig(options);
                 const pbService = app_1.App.services.phonegap;
                 const pbApi = yield pbService.authUser();

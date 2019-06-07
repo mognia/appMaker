@@ -1,3 +1,6 @@
+/**
+ * @module Core
+ */
 import chalk from "chalk";
 export class Log {
   private static get dateString() {

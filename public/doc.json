@@ -5,56 +5,30 @@
 	"flags": {},
 	"children": [
 		{
-			"id": 63,
-			"name": "\"controllers/BuildController\"",
+			"id": 11,
+			"name": "Build",
 			"kind": 1,
 			"kindString": "External module",
 			"flags": {
 				"isExported": true
 			},
-			"originalName": "/home/m-esm/Desktop/appMaker/src/controllers/BuildController.ts",
+			"originalName": "/home/m-esm/Desktop/appMaker/src/interfaces/QueueItemInterface.ts",
+			"comment": {},
 			"children": [
 				{
-					"id": 64,
+					"id": 102,
 					"name": "BuildController",
 					"kind": 128,
 					"kindString": "Class",
 					"flags": {
 						"isExported": true
 					},
+					"comment": {
+						"shortText": "This controller is responsible for build endpoints"
+					},
 					"children": [
 						{
-							"id": 65,
-							"name": "constructor",
-							"kind": 512,
-							"kindString": "Constructor",
-							"flags": {
-								"isExported": true
-							},
-							"signatures": [
-								{
-									"id": 66,
-									"name": "new BuildController",
-									"kind": 16384,
-									"kindString": "Constructor signature",
-									"flags": {},
-									"type": {
-										"type": "reference",
-										"name": "BuildController",
-										"id": 64
-									}
-								}
-							],
-							"sources": [
-								{
-									"fileName": "controllers/BuildController.ts",
-									"line": 7,
-									"character": 30
-								}
-							]
-						},
-						{
-							"id": 67,
+							"id": 107,
 							"name": "buildWithUrl",
 							"kind": 2048,
 							"kindString": "Method",
@@ -64,14 +38,14 @@
 							},
 							"signatures": [
 								{
-									"id": 68,
+									"id": 108,
 									"name": "buildWithUrl",
 									"kind": 4096,
 									"kindString": "Call signature",
 									"flags": {},
 									"parameters": [
 										{
-											"id": 69,
+											"id": 109,
 											"name": "req",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -82,7 +56,7 @@
 											}
 										},
 										{
-											"id": 70,
+											"id": 110,
 											"name": "res",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -108,8 +82,229 @@
 							"sources": [
 								{
 									"fileName": "controllers/BuildController.ts",
-									"line": 10,
+									"line": 26,
 									"character": 27
+								}
+							]
+						},
+						{
+							"id": 103,
+							"name": "checkQueueWithUid",
+							"kind": 2048,
+							"kindString": "Method",
+							"flags": {
+								"isStatic": true,
+								"isExported": true
+							},
+							"signatures": [
+								{
+									"id": 104,
+									"name": "checkQueueWithUid",
+									"kind": 4096,
+									"kindString": "Call signature",
+									"flags": {},
+									"parameters": [
+										{
+											"id": 105,
+											"name": "req",
+											"kind": 32768,
+											"kindString": "Parameter",
+											"flags": {},
+											"type": {
+												"type": "reference",
+												"name": "Request"
+											}
+										},
+										{
+											"id": 106,
+											"name": "res",
+											"kind": 32768,
+											"kindString": "Parameter",
+											"flags": {},
+											"type": {
+												"type": "reference",
+												"name": "Response"
+											}
+										}
+									],
+									"type": {
+										"type": "reference",
+										"name": "Promise",
+										"typeArguments": [
+											{
+												"type": "intrinsic",
+												"name": "void"
+											}
+										]
+									}
+								}
+							],
+							"sources": [
+								{
+									"fileName": "controllers/BuildController.ts",
+									"line": 16,
+									"character": 32
+								}
+							]
+						}
+					],
+					"groups": [
+						{
+							"title": "Methods",
+							"kind": 2048,
+							"children": [
+								107,
+								103
+							]
+						}
+					],
+					"sources": [
+						{
+							"fileName": "controllers/BuildController.ts",
+							"line": 15,
+							"character": 28
+						}
+					]
+				},
+				{
+					"id": 112,
+					"name": "BuildService",
+					"kind": 128,
+					"kindString": "Class",
+					"flags": {
+						"isExported": true
+					},
+					"comment": {
+						"shortText": "Responsible for Queueing build requests"
+					},
+					"children": [
+						{
+							"id": 113,
+							"name": "constructor",
+							"kind": 512,
+							"kindString": "Constructor",
+							"flags": {
+								"isExported": true
+							},
+							"signatures": [
+								{
+									"id": 114,
+									"name": "new BuildService",
+									"kind": 16384,
+									"kindString": "Constructor signature",
+									"flags": {},
+									"type": {
+										"type": "reference",
+										"name": "BuildService",
+										"id": 112
+									}
+								}
+							],
+							"sources": [
+								{
+									"fileName": "services/BuildService.ts",
+									"line": 15,
+									"character": 27
+								}
+							]
+						},
+						{
+							"id": 115,
+							"name": "currentQueueItem",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {
+								"isExported": true
+							},
+							"comment": {
+								"shortText": " Holds current processing item"
+							},
+							"sources": [
+								{
+									"fileName": "services/BuildService.ts",
+									"line": 20,
+									"character": 18
+								}
+							],
+							"type": {
+								"type": "reference",
+								"name": "QueueItemInterface",
+								"id": 12
+							}
+						},
+						{
+							"id": 118,
+							"name": "initiateQueue",
+							"kind": 2048,
+							"kindString": "Method",
+							"flags": {
+								"isExported": true
+							},
+							"signatures": [
+								{
+									"id": 119,
+									"name": "initiateQueue",
+									"kind": 4096,
+									"kindString": "Call signature",
+									"flags": {},
+									"comment": {
+										"shortText": "proceed queue by one"
+									},
+									"type": {
+										"type": "reference",
+										"name": "Promise",
+										"typeArguments": [
+											{
+												"type": "intrinsic",
+												"name": "void"
+											}
+										]
+									}
+								}
+							],
+							"sources": [
+								{
+									"fileName": "services/BuildService.ts",
+									"line": 45,
+									"character": 21
+								}
+							]
+						},
+						{
+							"id": 116,
+							"name": "start",
+							"kind": 2048,
+							"kindString": "Method",
+							"flags": {
+								"isExported": true
+							},
+							"signatures": [
+								{
+									"id": 117,
+									"name": "start",
+									"kind": 4096,
+									"kindString": "Call signature",
+									"flags": {},
+									"comment": {
+										"shortText": "runs on service start process, starts a timer for build queue"
+									},
+									"type": {
+										"type": "reference",
+										"name": "Promise",
+										"typeArguments": [
+											{
+												"type": "intrinsic",
+												"name": "void"
+											}
+										]
+									}
+								}
+							],
+							"sources": [
+								{
+									"fileName": "services/BuildService.ts",
+									"line": 25,
+									"character": 13
 								}
 							]
 						}
@@ -119,22 +314,450 @@
 							"title": "Constructors",
 							"kind": 512,
 							"children": [
-								65
+								113
+							]
+						},
+						{
+							"title": "Properties",
+							"kind": 1024,
+							"children": [
+								115
 							]
 						},
 						{
 							"title": "Methods",
 							"kind": 2048,
 							"children": [
-								67
+								118,
+								116
 							]
 						}
 					],
 					"sources": [
 						{
-							"fileName": "controllers/BuildController.ts",
-							"line": 7,
-							"character": 28
+							"fileName": "services/BuildService.ts",
+							"line": 15,
+							"character": 25
+						}
+					]
+				},
+				{
+					"id": 18,
+					"name": "BuildUrlOptionsInterface",
+					"kind": 256,
+					"kindString": "Interface",
+					"flags": {
+						"isExported": true
+					},
+					"comment": {
+						"shortText": "Interface used in build processes for converting scraped URLs to apps (ANDROID for now)"
+					},
+					"children": [
+						{
+							"id": 21,
+							"name": "appName",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {
+								"isExported": true,
+								"isOptional": true
+							},
+							"comment": {
+								"shortText": "app name to use for building and also writing config.xml"
+							},
+							"sources": [
+								{
+									"fileName": "interfaces/BuildUrlOptionsInterface.ts",
+									"line": 23,
+									"character": 9
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "string"
+							}
+						},
+						{
+							"id": 20,
+							"name": "directory",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {
+								"isExported": true,
+								"isOptional": true
+							},
+							"comment": {
+								"shortText": "directory to temporary hold scraped files"
+							},
+							"sources": [
+								{
+									"fileName": "interfaces/BuildUrlOptionsInterface.ts",
+									"line": 18,
+									"character": 11
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "string"
+							}
+						},
+						{
+							"id": 22,
+							"name": "icon",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {
+								"isExported": true,
+								"isOptional": true
+							},
+							"comment": {
+								"shortText": "base64 data string of icon used for the app"
+							},
+							"sources": [
+								{
+									"fileName": "interfaces/BuildUrlOptionsInterface.ts",
+									"line": 28,
+									"character": 6
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "string"
+							}
+						},
+						{
+							"id": 23,
+							"name": "ip",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {
+								"isExported": true,
+								"isOptional": true
+							},
+							"comment": {
+								"shortText": "IP address of whom requested the build"
+							},
+							"sources": [
+								{
+									"fileName": "interfaces/BuildUrlOptionsInterface.ts",
+									"line": 33,
+									"character": 4
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "string"
+							}
+						},
+						{
+							"id": 27,
+							"name": "processingError",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {
+								"isExported": true,
+								"isOptional": true
+							},
+							"comment": {
+								"shortText": "Error message if error ocurred during process"
+							},
+							"sources": [
+								{
+									"fileName": "interfaces/QueueItemInterface.ts",
+									"line": 27,
+									"character": 17
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "string"
+							},
+							"inheritedFrom": {
+								"type": "reference",
+								"name": "QueueItemInterface.processingError",
+								"id": 16
+							}
+						},
+						{
+							"id": 26,
+							"name": "processingFinished",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {
+								"isExported": true,
+								"isOptional": true
+							},
+							"comment": {
+								"shortText": "Date timestamp when process finished"
+							},
+							"sources": [
+								{
+									"fileName": "interfaces/QueueItemInterface.ts",
+									"line": 22,
+									"character": 20
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "number"
+							},
+							"inheritedFrom": {
+								"type": "reference",
+								"name": "QueueItemInterface.processingFinished",
+								"id": 15
+							}
+						},
+						{
+							"id": 25,
+							"name": "processingStarted",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {
+								"isExported": true,
+								"isOptional": true
+							},
+							"comment": {
+								"shortText": "Date timestamp when process started"
+							},
+							"sources": [
+								{
+									"fileName": "interfaces/QueueItemInterface.ts",
+									"line": 17,
+									"character": 19
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "number"
+							},
+							"inheritedFrom": {
+								"type": "reference",
+								"name": "QueueItemInterface.processingStarted",
+								"id": 14
+							}
+						},
+						{
+							"id": 24,
+							"name": "uid",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {
+								"isExported": true,
+								"isOptional": true
+							},
+							"comment": {
+								"shortText": "Unique id of queue item"
+							},
+							"sources": [
+								{
+									"fileName": "interfaces/QueueItemInterface.ts",
+									"line": 12,
+									"character": 5
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "string"
+							},
+							"inheritedFrom": {
+								"type": "reference",
+								"name": "QueueItemInterface.uid",
+								"id": 13
+							}
+						},
+						{
+							"id": 19,
+							"name": "urls",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {
+								"isExported": true,
+								"isOptional": true
+							},
+							"comment": {
+								"shortText": "URLs to scrape from"
+							},
+							"sources": [
+								{
+									"fileName": "interfaces/BuildUrlOptionsInterface.ts",
+									"line": 13,
+									"character": 6
+								}
+							],
+							"type": {
+								"type": "array",
+								"elementType": {
+									"type": "intrinsic",
+									"name": "string"
+								}
+							}
+						}
+					],
+					"groups": [
+						{
+							"title": "Properties",
+							"kind": 1024,
+							"children": [
+								21,
+								20,
+								22,
+								23,
+								27,
+								26,
+								25,
+								24,
+								19
+							]
+						}
+					],
+					"sources": [
+						{
+							"fileName": "interfaces/BuildUrlOptionsInterface.ts",
+							"line": 9,
+							"character": 41
+						}
+					],
+					"extendedTypes": [
+						{
+							"type": "reference",
+							"name": "QueueItemInterface",
+							"id": 12
+						}
+					]
+				},
+				{
+					"id": 12,
+					"name": "QueueItemInterface",
+					"kind": 256,
+					"kindString": "Interface",
+					"flags": {
+						"isExported": true
+					},
+					"comment": {
+						"shortText": "All items that will be put in build queue should implement this interface"
+					},
+					"children": [
+						{
+							"id": 16,
+							"name": "processingError",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {
+								"isExported": true,
+								"isOptional": true
+							},
+							"comment": {
+								"shortText": "Error message if error ocurred during process"
+							},
+							"sources": [
+								{
+									"fileName": "interfaces/QueueItemInterface.ts",
+									"line": 27,
+									"character": 17
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "string"
+							}
+						},
+						{
+							"id": 15,
+							"name": "processingFinished",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {
+								"isExported": true,
+								"isOptional": true
+							},
+							"comment": {
+								"shortText": "Date timestamp when process finished"
+							},
+							"sources": [
+								{
+									"fileName": "interfaces/QueueItemInterface.ts",
+									"line": 22,
+									"character": 20
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "number"
+							}
+						},
+						{
+							"id": 14,
+							"name": "processingStarted",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {
+								"isExported": true,
+								"isOptional": true
+							},
+							"comment": {
+								"shortText": "Date timestamp when process started"
+							},
+							"sources": [
+								{
+									"fileName": "interfaces/QueueItemInterface.ts",
+									"line": 17,
+									"character": 19
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "number"
+							}
+						},
+						{
+							"id": 13,
+							"name": "uid",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {
+								"isExported": true,
+								"isOptional": true
+							},
+							"comment": {
+								"shortText": "Unique id of queue item"
+							},
+							"sources": [
+								{
+									"fileName": "interfaces/QueueItemInterface.ts",
+									"line": 12,
+									"character": 5
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "string"
+							}
+						}
+					],
+					"groups": [
+						{
+							"title": "Properties",
+							"kind": 1024,
+							"children": [
+								16,
+								15,
+								14,
+								13
+							]
+						}
+					],
+					"sources": [
+						{
+							"fileName": "interfaces/QueueItemInterface.ts",
+							"line": 8,
+							"character": 35
+						}
+					],
+					"extendedBy": [
+						{
+							"type": "reference",
+							"name": "BuildUrlOptionsInterface",
+							"id": 18
 						}
 					]
 				}
@@ -144,13 +767,22 @@
 					"title": "Classes",
 					"kind": 128,
 					"children": [
-						64
+						102,
+						112
+					]
+				},
+				{
+					"title": "Interfaces",
+					"kind": 256,
+					"children": [
+						18,
+						12
 					]
 				}
 			],
 			"sources": [
 				{
-					"fileName": "controllers/BuildController.ts",
+					"fileName": "interfaces/QueueItemInterface.ts",
 					"line": 1,
 					"character": 0
 				}
@@ -158,7 +790,7 @@
 		},
 		{
 			"id": 1,
-			"name": "\"log\"",
+			"name": "Core",
 			"kind": 1,
 			"kindString": "External module",
 			"flags": {
@@ -231,7 +863,7 @@
 							"sources": [
 								{
 									"fileName": "log.ts",
-									"line": 13,
+									"line": 16,
 									"character": 14
 								}
 							]
@@ -292,7 +924,7 @@
 							"sources": [
 								{
 									"fileName": "log.ts",
-									"line": 6,
+									"line": 9,
 									"character": 13
 								}
 							]
@@ -311,8 +943,40 @@
 					"sources": [
 						{
 							"fileName": "log.ts",
-							"line": 2,
+							"line": 5,
 							"character": 16
+						}
+					]
+				},
+				{
+					"id": 121,
+					"name": "Start",
+					"kind": 64,
+					"kindString": "Function",
+					"flags": {
+						"isExported": true
+					},
+					"signatures": [
+						{
+							"id": 122,
+							"name": "Start",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"comment": {
+								"shortText": "bootstrap whole app starts listening on process.env[\"port\"] or default port ( 3000 )"
+							},
+							"type": {
+								"type": "intrinsic",
+								"name": "void"
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "start.ts",
+							"line": 11,
+							"character": 29
 						}
 					]
 				}
@@ -323,6 +987,13 @@
 					"kind": 128,
 					"children": [
 						2
+					]
+				},
+				{
+					"title": "Functions",
+					"kind": 64,
+					"children": [
+						121
 					]
 				}
 			],
@@ -335,8 +1006,8 @@
 			]
 		},
 		{
-			"id": 11,
-			"name": "\"services/PhonegapService\"",
+			"id": 28,
+			"name": "Phonegap",
 			"kind": 1,
 			"kindString": "External module",
 			"flags": {
@@ -345,16 +1016,19 @@
 			"originalName": "/home/m-esm/Desktop/appMaker/src/services/PhonegapService.ts",
 			"children": [
 				{
-					"id": 12,
+					"id": 29,
 					"name": "PhonegapService",
 					"kind": 128,
 					"kindString": "Class",
 					"flags": {
 						"isExported": true
 					},
+					"comment": {
+						"shortText": "Responsible for communicating with phonegap build API"
+					},
 					"children": [
 						{
-							"id": 13,
+							"id": 30,
 							"name": "constructor",
 							"kind": 512,
 							"kindString": "Constructor",
@@ -363,7 +1037,7 @@
 							},
 							"signatures": [
 								{
-									"id": 14,
+									"id": 31,
 									"name": "new PhonegapService",
 									"kind": 16384,
 									"kindString": "Constructor signature",
@@ -371,20 +1045,20 @@
 									"type": {
 										"type": "reference",
 										"name": "PhonegapService",
-										"id": 12
+										"id": 29
 									}
 								}
 							],
 							"sources": [
 								{
 									"fileName": "services/PhonegapService.ts",
-									"line": 6,
+									"line": 15,
 									"character": 30
 								}
 							]
 						},
 						{
-							"id": 17,
+							"id": 34,
 							"name": "authUser",
 							"kind": 2048,
 							"kindString": "Method",
@@ -393,11 +1067,15 @@
 							},
 							"signatures": [
 								{
-									"id": 18,
+									"id": 35,
 									"name": "authUser",
 									"kind": 4096,
 									"kindString": "Call signature",
 									"flags": {},
+									"comment": {
+										"shortText": "Authenticate with phonegap build API using username and password",
+										"returns": "instance of phonegap build API\n"
+									},
 									"type": {
 										"type": "reference",
 										"name": "Promise",
@@ -413,13 +1091,13 @@
 							"sources": [
 								{
 									"fileName": "services/PhonegapService.ts",
-									"line": 10,
+									"line": 23,
 									"character": 10
 								}
 							]
 						},
 						{
-							"id": 27,
+							"id": 54,
 							"name": "buildApp",
 							"kind": 2048,
 							"kindString": "Method",
@@ -428,29 +1106,38 @@
 							},
 							"signatures": [
 								{
-									"id": 28,
+									"id": 55,
 									"name": "buildApp",
 									"kind": 4096,
 									"kindString": "Call signature",
 									"flags": {},
+									"comment": {
+										"shortText": "request build to phonegap using app id"
+									},
 									"parameters": [
 										{
-											"id": 29,
+											"id": 56,
 											"name": "id",
 											"kind": 32768,
 											"kindString": "Parameter",
 											"flags": {},
+											"comment": {
+												"text": "id of phonegap app"
+											},
 											"type": {
 												"type": "intrinsic",
 												"name": "string"
 											}
 										},
 										{
-											"id": 30,
+											"id": 57,
 											"name": "api",
 											"kind": 32768,
 											"kindString": "Parameter",
 											"flags": {},
+											"comment": {
+												"text": "instance of phonegap build API\n"
+											},
 											"type": {
 												"type": "intrinsic",
 												"name": "any"
@@ -463,7 +1150,7 @@
 										"typeArguments": [
 											{
 												"type": "intrinsic",
-												"name": "void"
+												"name": "Object"
 											}
 										]
 									}
@@ -472,13 +1159,13 @@
 							"sources": [
 								{
 									"fileName": "services/PhonegapService.ts",
-									"line": 40,
+									"line": 79,
 									"character": 16
 								}
 							]
 						},
 						{
-							"id": 19,
+							"id": 36,
 							"name": "currentApp",
 							"kind": 2048,
 							"kindString": "Method",
@@ -487,21 +1174,176 @@
 							},
 							"signatures": [
 								{
-									"id": 20,
+									"id": 37,
 									"name": "currentApp",
 									"kind": 4096,
 									"kindString": "Call signature",
 									"flags": {},
+									"comment": {
+										"shortText": "returns current private app on phonegap",
+										"returns": "app id"
+									},
 									"parameters": [
 										{
-											"id": 21,
+											"id": 38,
 											"name": "api",
 											"kind": 32768,
 											"kindString": "Parameter",
 											"flags": {},
+											"comment": {
+												"text": "instace of phonegap build API\n"
+											},
 											"type": {
-												"type": "intrinsic",
-												"name": "any"
+												"type": "reflection",
+												"declaration": {
+													"id": 39,
+													"name": "__type",
+													"kind": 65536,
+													"kindString": "Type literal",
+													"flags": {},
+													"children": [
+														{
+															"id": 40,
+															"name": "get",
+															"kind": 32,
+															"kindString": "Variable",
+															"flags": {},
+															"sources": [
+																{
+																	"fileName": "services/PhonegapService.ts",
+																	"line": 50,
+																	"character": 7
+																}
+															],
+															"type": {
+																"type": "reflection",
+																"declaration": {
+																	"id": 41,
+																	"name": "__type",
+																	"kind": 65536,
+																	"kindString": "Type literal",
+																	"flags": {},
+																	"signatures": [
+																		{
+																			"id": 42,
+																			"name": "__call",
+																			"kind": 4096,
+																			"kindString": "Call signature",
+																			"flags": {},
+																			"parameters": [
+																				{
+																					"id": 43,
+																					"name": "arg0",
+																					"kind": 32768,
+																					"kindString": "Parameter",
+																					"flags": {},
+																					"type": {
+																						"type": "intrinsic",
+																						"name": "string"
+																					}
+																				},
+																				{
+																					"id": 44,
+																					"name": "arg1",
+																					"kind": 32768,
+																					"kindString": "Parameter",
+																					"flags": {},
+																					"type": {
+																						"type": "reflection",
+																						"declaration": {
+																							"id": 45,
+																							"name": "__type",
+																							"kind": 65536,
+																							"kindString": "Type literal",
+																							"flags": {},
+																							"signatures": [
+																								{
+																									"id": 46,
+																									"name": "__call",
+																									"kind": 4096,
+																									"kindString": "Call signature",
+																									"flags": {},
+																									"parameters": [
+																										{
+																											"id": 47,
+																											"name": "e",
+																											"kind": 32768,
+																											"kindString": "Parameter",
+																											"flags": {},
+																											"type": {
+																												"type": "intrinsic",
+																												"name": "any"
+																											}
+																										},
+																										{
+																											"id": 48,
+																											"name": "data",
+																											"kind": 32768,
+																											"kindString": "Parameter",
+																											"flags": {},
+																											"type": {
+																												"type": "intrinsic",
+																												"name": "any"
+																											}
+																										}
+																									],
+																									"type": {
+																										"type": "reference",
+																										"name": "Promise",
+																										"typeArguments": [
+																											{
+																												"type": "intrinsic",
+																												"name": "void"
+																											}
+																										]
+																									}
+																								}
+																							],
+																							"sources": [
+																								{
+																									"fileName": "services/PhonegapService.ts",
+																									"line": 50,
+																									"character": 29
+																								}
+																							]
+																						}
+																					}
+																				}
+																			],
+																			"type": {
+																				"type": "intrinsic",
+																				"name": "void"
+																			}
+																		}
+																	],
+																	"sources": [
+																		{
+																			"fileName": "services/PhonegapService.ts",
+																			"line": 50,
+																			"character": 8
+																		}
+																	]
+																}
+															}
+														}
+													],
+													"groups": [
+														{
+															"title": "Variables",
+															"kind": 32,
+															"children": [
+																40
+															]
+														}
+													],
+													"sources": [
+														{
+															"fileName": "services/PhonegapService.ts",
+															"line": 49,
+															"character": 23
+														}
+													]
+												}
 											}
 										}
 									],
@@ -512,14 +1354,14 @@
 											{
 												"type": "reflection",
 												"declaration": {
-													"id": 22,
+													"id": 49,
 													"name": "__type",
 													"kind": 65536,
 													"kindString": "Type literal",
 													"flags": {},
 													"children": [
 														{
-															"id": 23,
+															"id": 50,
 															"name": "id",
 															"kind": 32,
 															"kindString": "Variable",
@@ -527,8 +1369,8 @@
 															"sources": [
 																{
 																	"fileName": "services/PhonegapService.ts",
-																	"line": 25,
-																	"character": 37
+																	"line": 51,
+																	"character": 18
 																}
 															],
 															"type": {
@@ -542,15 +1384,15 @@
 															"title": "Variables",
 															"kind": 32,
 															"children": [
-																23
+																50
 															]
 														}
 													],
 													"sources": [
 														{
 															"fileName": "services/PhonegapService.ts",
-															"line": 25,
-															"character": 33
+															"line": 51,
+															"character": 14
 														}
 													]
 												}
@@ -562,13 +1404,13 @@
 							"sources": [
 								{
 									"fileName": "services/PhonegapService.ts",
-									"line": 25,
+									"line": 49,
 									"character": 18
 								}
 							]
 						},
 						{
-							"id": 34,
+							"id": 81,
 							"name": "downloadApp",
 							"kind": 2048,
 							"kindString": "Method",
@@ -577,29 +1419,51 @@
 							},
 							"signatures": [
 								{
-									"id": 35,
+									"id": 82,
 									"name": "downloadApp",
 									"kind": 4096,
 									"kindString": "Call signature",
 									"flags": {},
+									"comment": {
+										"shortText": "Download builded android app from phonegap to public/apk/{uid}/{appName}"
+									},
 									"parameters": [
 										{
-											"id": 36,
+											"id": 83,
+											"name": "opts",
+											"kind": 32768,
+											"kindString": "Parameter",
+											"flags": {},
+											"comment": {},
+											"type": {
+												"type": "reference",
+												"name": "BuildUrlOptionsInterface",
+												"id": 18
+											}
+										},
+										{
+											"id": 84,
 											"name": "id",
 											"kind": 32768,
 											"kindString": "Parameter",
 											"flags": {},
+											"comment": {
+												"text": "ID of app in phonegap build services"
+											},
 											"type": {
 												"type": "intrinsic",
-												"name": "any"
+												"name": "string"
 											}
 										},
 										{
-											"id": 37,
+											"id": 85,
 											"name": "api",
 											"kind": 32768,
 											"kindString": "Parameter",
 											"flags": {},
+											"comment": {
+												"text": "phonegap API instance\n"
+											},
 											"type": {
 												"type": "intrinsic",
 												"name": "any"
@@ -613,14 +1477,14 @@
 											{
 												"type": "reflection",
 												"declaration": {
-													"id": 38,
+													"id": 86,
 													"name": "__type",
 													"kind": 65536,
 													"kindString": "Type literal",
 													"flags": {},
 													"children": [
 														{
-															"id": 40,
+															"id": 88,
 															"name": "apk",
 															"kind": 32,
 															"kindString": "Variable",
@@ -628,8 +1492,8 @@
 															"sources": [
 																{
 																	"fileName": "services/PhonegapService.ts",
-																	"line": 97,
-																	"character": 61
+																	"line": 184,
+																	"character": 36
 																}
 															],
 															"type": {
@@ -638,7 +1502,7 @@
 															}
 														},
 														{
-															"id": 39,
+															"id": 87,
 															"name": "success",
 															"kind": 32,
 															"kindString": "Variable",
@@ -646,8 +1510,8 @@
 															"sources": [
 																{
 																	"fileName": "services/PhonegapService.ts",
-																	"line": 97,
-																	"character": 47
+																	"line": 184,
+																	"character": 22
 																}
 															],
 															"type": {
@@ -661,16 +1525,16 @@
 															"title": "Variables",
 															"kind": 32,
 															"children": [
-																40,
-																39
+																88,
+																87
 															]
 														}
 													],
 													"sources": [
 														{
 															"fileName": "services/PhonegapService.ts",
-															"line": 97,
-															"character": 38
+															"line": 184,
+															"character": 13
 														}
 													]
 												}
@@ -682,13 +1546,13 @@
 							"sources": [
 								{
 									"fileName": "services/PhonegapService.ts",
-									"line": 97,
+									"line": 180,
 									"character": 19
 								}
 							]
 						},
 						{
-							"id": 24,
+							"id": 51,
 							"name": "removePrevious",
 							"kind": 2048,
 							"kindString": "Method",
@@ -697,18 +1561,24 @@
 							},
 							"signatures": [
 								{
-									"id": 25,
+									"id": 52,
 									"name": "removePrevious",
 									"kind": 4096,
 									"kindString": "Call signature",
 									"flags": {},
+									"comment": {
+										"shortText": "remove previous private app from phonegap build API"
+									},
 									"parameters": [
 										{
-											"id": 26,
+											"id": 53,
 											"name": "api",
 											"kind": 32768,
 											"kindString": "Parameter",
 											"flags": {},
+											"comment": {
+												"text": "instance of phonegap build API\n"
+											},
 											"type": {
 												"type": "intrinsic",
 												"name": "any"
@@ -730,13 +1600,13 @@
 							"sources": [
 								{
 									"fileName": "services/PhonegapService.ts",
-									"line": 35,
+									"line": 69,
 									"character": 22
 								}
 							]
 						},
 						{
-							"id": 15,
+							"id": 32,
 							"name": "start",
 							"kind": 2048,
 							"kindString": "Method",
@@ -745,7 +1615,7 @@
 							},
 							"signatures": [
 								{
-									"id": 16,
+									"id": 33,
 									"name": "start",
 									"kind": 4096,
 									"kindString": "Call signature",
@@ -765,13 +1635,13 @@
 							"sources": [
 								{
 									"fileName": "services/PhonegapService.ts",
-									"line": 8,
+									"line": 17,
 									"character": 13
 								}
 							]
 						},
 						{
-							"id": 31,
+							"id": 58,
 							"name": "uploadApp",
 							"kind": 2048,
 							"kindString": "Method",
@@ -780,21 +1650,363 @@
 							},
 							"signatures": [
 								{
-									"id": 32,
+									"id": 59,
 									"name": "uploadApp",
 									"kind": 4096,
 									"kindString": "Call signature",
 									"flags": {},
+									"comment": {
+										"shortText": "Uploads zipped package of app to phonegap"
+									},
 									"parameters": [
 										{
-											"id": 33,
+											"id": 60,
+											"name": "opts",
+											"kind": 32768,
+											"kindString": "Parameter",
+											"flags": {},
+											"comment": {},
+											"type": {
+												"type": "reference",
+												"name": "BuildUrlOptionsInterface",
+												"id": 18
+											}
+										},
+										{
+											"id": 61,
 											"name": "api",
 											"kind": 32768,
 											"kindString": "Parameter",
 											"flags": {},
+											"comment": {
+												"text": "\n"
+											},
 											"type": {
-												"type": "intrinsic",
-												"name": "any"
+												"type": "reflection",
+												"declaration": {
+													"id": 62,
+													"name": "__type",
+													"kind": 65536,
+													"kindString": "Type literal",
+													"flags": {},
+													"children": [
+														{
+															"id": 63,
+															"name": "post",
+															"kind": 32,
+															"kindString": "Variable",
+															"flags": {},
+															"sources": [
+																{
+																	"fileName": "services/PhonegapService.ts",
+																	"line": 138,
+																	"character": 10
+																}
+															],
+															"type": {
+																"type": "reflection",
+																"declaration": {
+																	"id": 64,
+																	"name": "__type",
+																	"kind": 65536,
+																	"kindString": "Type literal",
+																	"flags": {},
+																	"signatures": [
+																		{
+																			"id": 65,
+																			"name": "__call",
+																			"kind": 4096,
+																			"kindString": "Call signature",
+																			"flags": {},
+																			"parameters": [
+																				{
+																					"id": 66,
+																					"name": "arg0",
+																					"kind": 32768,
+																					"kindString": "Parameter",
+																					"flags": {},
+																					"type": {
+																						"type": "intrinsic",
+																						"name": "string"
+																					}
+																				},
+																				{
+																					"id": 67,
+																					"name": "arg1",
+																					"kind": 32768,
+																					"kindString": "Parameter",
+																					"flags": {},
+																					"type": {
+																						"type": "reflection",
+																						"declaration": {
+																							"id": 68,
+																							"name": "__type",
+																							"kind": 65536,
+																							"kindString": "Type literal",
+																							"flags": {},
+																							"children": [
+																								{
+																									"id": 69,
+																									"name": "form",
+																									"kind": 32,
+																									"kindString": "Variable",
+																									"flags": {},
+																									"sources": [
+																										{
+																											"fileName": "services/PhonegapService.ts",
+																											"line": 141,
+																											"character": 14
+																										}
+																									],
+																									"type": {
+																										"type": "reflection",
+																										"declaration": {
+																											"id": 70,
+																											"name": "__type",
+																											"kind": 65536,
+																											"kindString": "Type literal",
+																											"flags": {},
+																											"children": [
+																												{
+																													"id": 71,
+																													"name": "data",
+																													"kind": 32,
+																													"kindString": "Variable",
+																													"flags": {},
+																													"sources": [
+																														{
+																															"fileName": "services/PhonegapService.ts",
+																															"line": 142,
+																															"character": 16
+																														}
+																													],
+																													"type": {
+																														"type": "reflection",
+																														"declaration": {
+																															"id": 72,
+																															"name": "__type",
+																															"kind": 65536,
+																															"kindString": "Type literal",
+																															"flags": {},
+																															"children": [
+																																{
+																																	"id": 74,
+																																	"name": "create_method",
+																																	"kind": 32,
+																																	"kindString": "Variable",
+																																	"flags": {},
+																																	"sources": [
+																																		{
+																																			"fileName": "services/PhonegapService.ts",
+																																			"line": 142,
+																																			"character": 48
+																																		}
+																																	],
+																																	"type": {
+																																		"type": "intrinsic",
+																																		"name": "string"
+																																	}
+																																},
+																																{
+																																	"id": 73,
+																																	"name": "title",
+																																	"kind": 32,
+																																	"kindString": "Variable",
+																																	"flags": {},
+																																	"sources": [
+																																		{
+																																			"fileName": "services/PhonegapService.ts",
+																																			"line": 142,
+																																			"character": 25
+																																		}
+																																	],
+																																	"type": {
+																																		"type": "intrinsic",
+																																		"name": "string"
+																																	}
+																																}
+																															],
+																															"groups": [
+																																{
+																																	"title": "Variables",
+																																	"kind": 32,
+																																	"children": [
+																																		74,
+																																		73
+																																	]
+																																}
+																															],
+																															"sources": [
+																																{
+																																	"fileName": "services/PhonegapService.ts",
+																																	"line": 142,
+																																	"character": 17
+																																}
+																															]
+																														}
+																													}
+																												},
+																												{
+																													"id": 75,
+																													"name": "file",
+																													"kind": 32,
+																													"kindString": "Variable",
+																													"flags": {},
+																													"sources": [
+																														{
+																															"fileName": "services/PhonegapService.ts",
+																															"line": 143,
+																															"character": 16
+																														}
+																													],
+																													"type": {
+																														"type": "intrinsic",
+																														"name": "string"
+																													}
+																												}
+																											],
+																											"groups": [
+																												{
+																													"title": "Variables",
+																													"kind": 32,
+																													"children": [
+																														71,
+																														75
+																													]
+																												}
+																											],
+																											"sources": [
+																												{
+																													"fileName": "services/PhonegapService.ts",
+																													"line": 141,
+																													"character": 15
+																												}
+																											]
+																										}
+																									}
+																								}
+																							],
+																							"groups": [
+																								{
+																									"title": "Variables",
+																									"kind": 32,
+																									"children": [
+																										69
+																									]
+																								}
+																							],
+																							"sources": [
+																								{
+																									"fileName": "services/PhonegapService.ts",
+																									"line": 140,
+																									"character": 13
+																								}
+																							]
+																						}
+																					}
+																				},
+																				{
+																					"id": 76,
+																					"name": "arg2",
+																					"kind": 32768,
+																					"kindString": "Parameter",
+																					"flags": {},
+																					"type": {
+																						"type": "reflection",
+																						"declaration": {
+																							"id": 77,
+																							"name": "__type",
+																							"kind": 65536,
+																							"kindString": "Type literal",
+																							"flags": {},
+																							"signatures": [
+																								{
+																									"id": 78,
+																									"name": "__call",
+																									"kind": 4096,
+																									"kindString": "Call signature",
+																									"flags": {},
+																									"parameters": [
+																										{
+																											"id": 79,
+																											"name": "e",
+																											"kind": 32768,
+																											"kindString": "Parameter",
+																											"flags": {},
+																											"type": {
+																												"type": "intrinsic",
+																												"name": "any"
+																											}
+																										},
+																										{
+																											"id": 80,
+																											"name": "data",
+																											"kind": 32768,
+																											"kindString": "Parameter",
+																											"flags": {},
+																											"type": {
+																												"type": "intrinsic",
+																												"name": "any"
+																											}
+																										}
+																									],
+																									"type": {
+																										"type": "reference",
+																										"name": "Promise",
+																										"typeArguments": [
+																											{
+																												"type": "intrinsic",
+																												"name": "void"
+																											}
+																										]
+																									}
+																								}
+																							],
+																							"sources": [
+																								{
+																									"fileName": "services/PhonegapService.ts",
+																									"line": 146,
+																									"character": 13
+																								}
+																							]
+																						}
+																					}
+																				}
+																			],
+																			"type": {
+																				"type": "intrinsic",
+																				"name": "void"
+																			}
+																		}
+																	],
+																	"sources": [
+																		{
+																			"fileName": "services/PhonegapService.ts",
+																			"line": 138,
+																			"character": 11
+																		}
+																	]
+																}
+															}
+														}
+													],
+													"groups": [
+														{
+															"title": "Variables",
+															"kind": 32,
+															"children": [
+																63
+															]
+														}
+													],
+													"sources": [
+														{
+															"fileName": "services/PhonegapService.ts",
+															"line": 137,
+															"character": 8
+														}
+													]
+												}
 											}
 										}
 									],
@@ -813,7 +2025,7 @@
 							"sources": [
 								{
 									"fileName": "services/PhonegapService.ts",
-									"line": 76,
+									"line": 135,
 									"character": 17
 								}
 							]
@@ -824,27 +2036,27 @@
 							"title": "Constructors",
 							"kind": 512,
 							"children": [
-								13
+								30
 							]
 						},
 						{
 							"title": "Methods",
 							"kind": 2048,
 							"children": [
-								17,
-								27,
-								19,
 								34,
-								24,
-								15,
-								31
+								54,
+								36,
+								81,
+								51,
+								32,
+								58
 							]
 						}
 					],
 					"sources": [
 						{
 							"fileName": "services/PhonegapService.ts",
-							"line": 6,
+							"line": 15,
 							"character": 28
 						}
 					]
@@ -855,7 +2067,7 @@
 					"title": "Classes",
 					"kind": 128,
 					"children": [
-						12
+						29
 					]
 				}
 			],
@@ -868,8 +2080,8 @@
 			]
 		},
 		{
-			"id": 41,
-			"name": "\"services/ScrapeService\"",
+			"id": 89,
+			"name": "Scrape",
 			"kind": 1,
 			"kindString": "External module",
 			"flags": {
@@ -878,7 +2090,7 @@
 			"originalName": "/home/m-esm/Desktop/appMaker/src/services/ScrapeService.ts",
 			"children": [
 				{
-					"id": 42,
+					"id": 90,
 					"name": "ScrapeService",
 					"kind": 128,
 					"kindString": "Class",
@@ -887,7 +2099,7 @@
 					},
 					"children": [
 						{
-							"id": 43,
+							"id": 91,
 							"name": "constructor",
 							"kind": 512,
 							"kindString": "Constructor",
@@ -896,7 +2108,7 @@
 							},
 							"signatures": [
 								{
-									"id": 44,
+									"id": 92,
 									"name": "new ScrapeService",
 									"kind": 16384,
 									"kindString": "Constructor signature",
@@ -904,193 +2116,51 @@
 									"type": {
 										"type": "reference",
 										"name": "ScrapeService",
-										"id": 42
+										"id": 90
 									}
 								}
 							],
 							"sources": [
 								{
 									"fileName": "services/ScrapeService.ts",
-									"line": 9,
+									"line": 14,
 									"character": 28
 								}
 							]
 						},
 						{
-							"id": 55,
-							"name": "iconResizer",
+							"id": 95,
+							"name": "runScrapper",
 							"kind": 2048,
 							"kindString": "Method",
 							"flags": {
+								"isPublic": true,
 								"isExported": true
 							},
 							"signatures": [
 								{
-									"id": 56,
-									"name": "iconResizer",
+									"id": 96,
+									"name": "runScrapper",
 									"kind": 4096,
 									"kindString": "Call signature",
 									"flags": {},
+									"comment": {
+										"shortText": "runs website scrapper against provided URLs in build request options\ndefault icon will be copied and if icon is provided in options we will start resizing"
+									},
 									"parameters": [
 										{
-											"id": 57,
-											"name": "iconName",
-											"kind": 32768,
-											"kindString": "Parameter",
-											"flags": {},
-											"type": {
-												"type": "intrinsic",
-												"name": "string"
-											}
-										}
-									],
-									"type": {
-										"type": "reference",
-										"name": "Promise",
-										"typeArguments": [
-											{
-												"type": "intrinsic",
-												"name": "void"
-											}
-										]
-									}
-								}
-							],
-							"sources": [
-								{
-									"fileName": "services/ScrapeService.ts",
-									"line": 24,
-									"character": 19
-								}
-							]
-						},
-						{
-							"id": 47,
-							"name": "run",
-							"kind": 2048,
-							"kindString": "Method",
-							"flags": {
-								"isExported": true
-							},
-							"signatures": [
-								{
-									"id": 48,
-									"name": "run",
-									"kind": 4096,
-									"kindString": "Call signature",
-									"flags": {},
-									"parameters": [
-										{
-											"id": 49,
+											"id": 97,
 											"name": "opts",
 											"kind": 32768,
 											"kindString": "Parameter",
 											"flags": {},
+											"comment": {
+												"text": "\n"
+											},
 											"type": {
-												"type": "reflection",
-												"declaration": {
-													"id": 50,
-													"name": "__type",
-													"kind": 65536,
-													"kindString": "Type literal",
-													"flags": {},
-													"children": [
-														{
-															"id": 54,
-															"name": "appName",
-															"kind": 32,
-															"kindString": "Variable",
-															"flags": {},
-															"sources": [
-																{
-																	"fileName": "services/ScrapeService.ts",
-																	"line": 16,
-																	"character": 11
-																}
-															],
-															"type": {
-																"type": "intrinsic",
-																"name": "string"
-															}
-														},
-														{
-															"id": 52,
-															"name": "directory",
-															"kind": 32,
-															"kindString": "Variable",
-															"flags": {},
-															"sources": [
-																{
-																	"fileName": "services/ScrapeService.ts",
-																	"line": 14,
-																	"character": 13
-																}
-															],
-															"type": {
-																"type": "intrinsic",
-																"name": "string"
-															}
-														},
-														{
-															"id": 53,
-															"name": "iconName",
-															"kind": 32,
-															"kindString": "Variable",
-															"flags": {},
-															"sources": [
-																{
-																	"fileName": "services/ScrapeService.ts",
-																	"line": 15,
-																	"character": 12
-																}
-															],
-															"type": {
-																"type": "intrinsic",
-																"name": "string"
-															}
-														},
-														{
-															"id": 51,
-															"name": "urls",
-															"kind": 32,
-															"kindString": "Variable",
-															"flags": {},
-															"sources": [
-																{
-																	"fileName": "services/ScrapeService.ts",
-																	"line": 13,
-																	"character": 8
-																}
-															],
-															"type": {
-																"type": "array",
-																"elementType": {
-																	"type": "intrinsic",
-																	"name": "string"
-																}
-															}
-														}
-													],
-													"groups": [
-														{
-															"title": "Variables",
-															"kind": 32,
-															"children": [
-																54,
-																52,
-																53,
-																51
-															]
-														}
-													],
-													"sources": [
-														{
-															"fileName": "services/ScrapeService.ts",
-															"line": 12,
-															"character": 17
-														}
-													]
-												}
+												"type": "reference",
+												"name": "BuildUrlOptionsInterface",
+												"id": 18
 											}
 										}
 									],
@@ -1109,13 +2179,13 @@
 							"sources": [
 								{
 									"fileName": "services/ScrapeService.ts",
-									"line": 12,
-									"character": 11
+									"line": 23,
+									"character": 26
 								}
 							]
 						},
 						{
-							"id": 45,
+							"id": 93,
 							"name": "start",
 							"kind": 2048,
 							"kindString": "Method",
@@ -1124,7 +2194,7 @@
 							},
 							"signatures": [
 								{
-									"id": 46,
+									"id": 94,
 									"name": "start",
 									"kind": 4096,
 									"kindString": "Call signature",
@@ -1144,13 +2214,13 @@
 							"sources": [
 								{
 									"fileName": "services/ScrapeService.ts",
-									"line": 11,
+									"line": 16,
 									"character": 13
 								}
 							]
 						},
 						{
-							"id": 58,
+							"id": 98,
 							"name": "writeConfig",
 							"kind": 2048,
 							"kindString": "Method",
@@ -1159,63 +2229,22 @@
 							},
 							"signatures": [
 								{
-									"id": 59,
+									"id": 99,
 									"name": "writeConfig",
 									"kind": 4096,
 									"kindString": "Call signature",
 									"flags": {},
 									"parameters": [
 										{
-											"id": 60,
+											"id": 100,
 											"name": "opts",
 											"kind": 32768,
 											"kindString": "Parameter",
 											"flags": {},
 											"type": {
-												"type": "reflection",
-												"declaration": {
-													"id": 61,
-													"name": "__type",
-													"kind": 65536,
-													"kindString": "Type literal",
-													"flags": {},
-													"children": [
-														{
-															"id": 62,
-															"name": "appName",
-															"kind": 32,
-															"kindString": "Variable",
-															"flags": {},
-															"sources": [
-																{
-																	"fileName": "services/ScrapeService.ts",
-																	"line": 55,
-																	"character": 35
-																}
-															],
-															"type": {
-																"type": "intrinsic",
-																"name": "string"
-															}
-														}
-													],
-													"groups": [
-														{
-															"title": "Variables",
-															"kind": 32,
-															"children": [
-																62
-															]
-														}
-													],
-													"sources": [
-														{
-															"fileName": "services/ScrapeService.ts",
-															"line": 55,
-															"character": 25
-														}
-													]
-												}
+												"type": "reference",
+												"name": "BuildUrlOptionsInterface",
+												"id": 18
 											}
 										}
 									],
@@ -1234,7 +2263,7 @@
 							"sources": [
 								{
 									"fileName": "services/ScrapeService.ts",
-									"line": 55,
+									"line": 78,
 									"character": 19
 								}
 							]
@@ -1245,24 +2274,23 @@
 							"title": "Constructors",
 							"kind": 512,
 							"children": [
-								43
+								91
 							]
 						},
 						{
 							"title": "Methods",
 							"kind": 2048,
 							"children": [
-								55,
-								47,
-								45,
-								58
+								95,
+								93,
+								98
 							]
 						}
 					],
 					"sources": [
 						{
 							"fileName": "services/ScrapeService.ts",
-							"line": 9,
+							"line": 14,
 							"character": 26
 						}
 					]
@@ -1273,7 +2301,7 @@
 					"title": "Classes",
 					"kind": 128,
 					"children": [
-						42
+						90
 					]
 				}
 			],
@@ -1286,25 +2314,8 @@
 			]
 		},
 		{
-			"id": 71,
-			"name": "\"start\"",
-			"kind": 1,
-			"kindString": "External module",
-			"flags": {
-				"isExported": true
-			},
-			"originalName": "/home/m-esm/Desktop/appMaker/src/start.ts",
-			"sources": [
-				{
-					"fileName": "start.ts",
-					"line": 1,
-					"character": 0
-				}
-			]
-		},
-		{
-			"id": 72,
-			"name": "\"tests/build\"",
+			"id": 123,
+			"name": "Tests",
 			"kind": 1,
 			"kindString": "External module",
 			"flags": {
@@ -1325,12 +2336,11 @@
 			"title": "External modules",
 			"kind": 1,
 			"children": [
-				63,
-				1,
 				11,
-				41,
-				71,
-				72
+				1,
+				28,
+				89,
+				123
 			]
 		}
 	]
