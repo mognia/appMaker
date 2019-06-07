@@ -108,7 +108,7 @@
           ))
 
 
-          if (!item.processingFinished) {
+          if (!item.processingFinished && !item.processingError) {
 
             $.ajax({
               method: 'get',
