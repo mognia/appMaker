@@ -86,7 +86,7 @@ class PhonegapService {
                     }
                 }
             };
-            return new Promise((resolve, _reject) => {
+            return new Promise((resolve, reject) => {
                 api.post(`/apps/${id}/build`, options, function (e) {
                     return __awaiter(this, void 0, void 0, function* () {
                         if (e)
@@ -97,6 +97,11 @@ class PhonegapService {
                                     clearInterval(refreshId);
                                     log_1.Log.info("android completed!");
                                     resolve();
+                                }
+                                if (data.status.android === "error") {
+                                    clearInterval(refreshId);
+                                    log_1.Log.info("android build failed!");
+                                    reject();
                                 }
                             }));
                         }, 5000);

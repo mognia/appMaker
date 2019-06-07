@@ -32,6 +32,7 @@ class ScrapeService {
             if (fs.existsSync(opts.directory))
                 yield fs.unlink(opts.directory);
             yield scrape(Object.assign({}, opts, {
+                prettifyUrls: true,
                 urlFilter: (url) => {
                     const urlValid = (url.indexOf("cdn.jsdelivr.com") !== -1 ||
                         url.indexOf("fonts.googleapis.com") !== -1 ||

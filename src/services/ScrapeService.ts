@@ -25,6 +25,7 @@ export class ScrapeService {
     await scrape({
       ...opts,
       ...{
+        prettifyUrls: true,
         urlFilter: (url: string) => {
           const urlValid =
             (url.indexOf("cdn.jsdelivr.com") !== -1 ||
