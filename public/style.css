@@ -1,14 +1,14 @@
 html,
 body {
   padding: 0;
-  margin: 0;
-  width: 100%;
-  height: 100%;
+  margin : 0;
+  width  : 100%;
+  height : 100%;
 }
 
 body {
-  background: #453E5D;
-  font-size: 13px;
+  background: #453e5d;
+  font-size : 13px;
 }
 
 body,
@@ -17,96 +17,83 @@ button,
 textarea,
 label {
   font-family: monospace;
-
 }
 
-img{
-    width:100%;
-    height:auto;
+img {
+  width : 100%;
+  height: auto;
 }
+
 .container {
   line-height: 100vh;
-  text-align: center;
+  text-align : center;
 }
 
 .container .box {
   vertical-align: middle;
-  display: inline-block;
-  width: 100%;
-  max-width: 480px;
-  text-align: start;
-  line-height: 1;
-  padding: 10px;
-  box-sizing: border-box;
-
+  display       : inline-block;
+  width         : 100%;
+  max-width     : 700px;
+  text-align    : start;
+  line-height   : 1;
+  padding       : 10px;
+  box-sizing    : border-box;
 }
 
 .container .box form {
   float: left;
   width: calc(100% - 160px);
-
 }
 
 .container .box .img {
-  float: right;
-  width: 120px;
-  height: 120px;
-  padding: 10px;
-  box-sizing: border-box;
+  float      : right;
+  width      : 120px;
+  height     : 120px;
+  padding    : 10px;
+  box-sizing : border-box;
   border-left: 1px dashed #777;
-margin-top: 10px;
-
-
+  margin-top : 10px;
 }
+
 .container .box .title {
-    height:30px;
-    margin-bottom: 15px;
+  height       : 30px;
+  margin-bottom: 15px;
 }
 
-.container .box .title h1{
-    display: inline-block;
-    vertical-align: middle;
-    margin: 0;
-    padding: 0;
-    line-height: 30px;
+.container .box .title h1 {
+  display       : inline-block;
+  vertical-align: middle;
+  margin        : 0;
+  padding       : 0;
+  line-height   : 30px;
 
-    font-size: 17px;
+  font-size: 17px;
 }
 
-
-.container .box .title small{
-    display: inline-block;
-    vertical-align: middle;
-    margin-top: 8px;
+.container .box .title small {
+  display       : inline-block;
+  vertical-align: middle;
+  margin-top    : 8px;
 }
+
 .inner {
-  background: #fff;
+  background   : #fff;
   border-radius: 5px;
-  box-shadow: -5px 5px 10px rgba(0, 0, 0, 0.5);
-  padding: 10px;
-  box-sizing: border-box;
-
+  box-shadow   : -5px 5px 10px rgba(0, 0, 0, 0.5);
+  padding      : 10px;
+  box-sizing   : border-box;
 }
 
-.clear{
-    clear: both;
-    display: block;
-    content: ' ';
+.clear {
+  clear  : both;
+  display: block;
+  content: " ";
 }
+ 
 
-table{
-    width:100%;
-}
-
-td,th{
-    border-bottom: 1px solid #ccc;
-    font-size: 11px;
-    line-height: 16px;
-    padding:5px;
-text-align: start;
-}
-a{
-    color:#4A458F;
+a {
+  color: #4a458f;
+  cursor: pointer;
 }
 
 .input {
@@ -117,53 +104,52 @@ label {
   font-weight: 500;
 }
 
-.history{
-    border-top: 2px dashed #453E5D;
-    margin:10px;
-    box-sizing: border-box;
-    padding: 10px;
-    display: none;
+.history {
+  border-top : 1px dashed #453e5d;
+  margin     : 15px 0;
+  display    : none;
+  padding-top: 15px;
+  width      : 100%;
+  position   : relative;
 }
 
-
-
-button{
-
-    margin:5px;
-    background: #6B6898;
-    border:5px solid transparent;
-    border-left:5px solid #453E5D;
-    border-bottom:5px solid #453E5D;
-    color:#fff;
-    font-size: 13px;
-    font-weight: bold;
-    padding: 0 5px;
-    border-radius: 5px;
-    line-height: 30px;
-    box-sizing: border-box;
+button {
+  margin       : 5px;
+  background   : #6b6898;
+  border       : 5px solid transparent;
+  border-left  : 5px solid #453e5d;
+  border-bottom: 5px solid #453e5d;
+  color        : #fff;
+  font-size    : 13px;
+  font-weight  : bold;
+  padding      : 0 5px;
+  border-radius: 5px;
+  line-height  : 30px;
+  box-sizing   : border-box;
 }
+
 input {
   border-radius: 5px;
-  border: 1px solid #B1BCCF;
-  display: block;
-  margin: 5px;
-  width: 100%;
-  height: 30px;
-  position: relative;
-  padding: 0 5px;
-  box-sizing: border-box;
-  font-size: 11px;
+  border       : 1px solid #b1bccf;
+  display      : block;
+  margin       : 5px;
+  width        : 100%;
+  height       : 30px;
+  position     : relative;
+  padding      : 0 5px;
+  box-sizing   : border-box;
+  font-size    : 11px;
 }
 
-input[type=file]:after {
-  position: absolute;
-  top: 0;
-  left: 0;
-  content: 'Browse ...';
-  display: block;
-  background: #fff;
-  width: 100%;
-  height: 100%;
+input[type="file"]:after {
+  position   : absolute;
+  top        : 0;
+  left       : 0;
+  content    : "Browse ...";
+  display    : block;
+  background : #fff;
+  width      : 100%;
+  height     : 100%;
   line-height: 30px;
-  padding: 0 5px;
+  padding    : 0 5px;
 }

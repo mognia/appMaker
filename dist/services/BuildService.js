@@ -29,10 +29,12 @@ class BuildService {
                     this.initiateQueue()
                         .then(() => { })
                         .catch((e) => __awaiter(this, void 0, void 0, function* () {
-                        const optionsPath = "./queue/" + this.currentQueueItem.uid + ".json";
-                        this.currentQueueItem.processingError = (e || "").toString();
-                        yield fs.writeJSON(optionsPath, this.currentQueueItem);
-                        this.currentQueueItem = null;
+                        if (this.currentQueueItem) {
+                            const optionsPath = "./queue/" + this.currentQueueItem.uid + ".json";
+                            this.currentQueueItem.processingError = (e || "").toString();
+                            yield fs.writeJSON(optionsPath, this.currentQueueItem);
+                            this.currentQueueItem = null;
+                        }
                         log_1.Log.error(e);
                     }));
                 }
@@ -44,6 +46,7 @@ class BuildService {
      */
     initiateQueue() {
         return __awaiter(this, void 0, void 0, function* () {
+            yield fs.ensureDir("./queue");
             const queueFiles = yield fs.readdir("./queue");
             let optionsPath;
             let options;

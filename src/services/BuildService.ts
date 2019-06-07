@@ -28,11 +28,14 @@ export class BuildService {
         this.initiateQueue()
           .then(() => {})
           .catch(async e => {
-            const optionsPath =
-              "./queue/" + this.currentQueueItem.uid + ".json";
-            this.currentQueueItem.processingError = (e || "").toString();
-            await fs.writeJSON(optionsPath, this.currentQueueItem);
-            this.currentQueueItem = null;
+            if (this.currentQueueItem) {
+              const optionsPath =
+                "./queue/" + this.currentQueueItem.uid + ".json";
+              this.currentQueueItem.processingError = (e || "").toString();
+              await fs.writeJSON(optionsPath, this.currentQueueItem);
+              this.currentQueueItem = null;
+            }
+
             Log.error(e);
           });
       }
@@ -43,6 +46,7 @@ export class BuildService {
    * proceed queue by one
    */
   async initiateQueue() {
+    await fs.ensureDir("./queue");
     const queueFiles = await fs.readdir("./queue");
 
     let optionsPath: any;

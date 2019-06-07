@@ -8,9 +8,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+/**
+ * @module Build
+ */
+const serendip_utility_1 = require("serendip-utility");
 const fs = require("fs-extra");
 const log_1 = require("../log");
-const bson_objectid_1 = require("bson-objectid");
 /**
  * This controller is responsible for build endpoints
  */
@@ -29,19 +32,26 @@ class BuildController {
     }
     static buildWithUrl(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
+            if (!req.body.url) {
+                res.status(400);
+                res.end();
+            }
             const appName = req.body.name ||
                 req.body.url
-                    .split("//")[1]
-                    .split("/")[0]
-                    .split(":")[0];
-            const uid = new bson_objectid_1.default().str;
+                    .replace("https://", "")
+                    .replace("http://", "")
+                    .replace(/\W/g, " ");
+            const uid = serendip_utility_1.text.randomAsciiString(12);
             let options = {
                 uid,
                 urls: [req.body.url],
                 directory: `./temp/${uid}/www`,
                 appName: appName,
                 icon: req.body.icon,
-                ip: req.ip
+                ip: req.ip,
+                recursive: true,
+                maxRecursiveDepth: 3,
+                requestConcurrency: 8
             };
             log_1.Log.info("build request", options);
             yield fs.ensureDir("./queue");

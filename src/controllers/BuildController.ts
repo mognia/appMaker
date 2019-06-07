@@ -1,13 +1,12 @@
 /**
  * @module Build
  */
-import * as multer from "multer";
+import { text } from "serendip-utility";
 import { Request, Response } from "express";
 import * as fs from "fs-extra";
-import { App } from "../app";
-import { Log } from "../log";
-import ObjectId from "bson-objectid";
+
 import { BuildUrlOptionsInterface } from "../interfaces/BuildUrlOptionsInterface";
+import { Log } from "../log";
 
 /**
  * This controller is responsible for build endpoints
@@ -24,21 +23,29 @@ export class BuildController {
   }
 
   static async buildWithUrl(req: Request, res: Response) {
+    if (!req.body.url) {
+      res.status(400);
+      res.end();
+    }
+
     const appName =
       req.body.name ||
       req.body.url
-        .split("//")[1]
-        .split("/")[0]
-        .split(":")[0];
+        .replace("https://", "")
+        .replace("http://", "")
+        .replace(/\W/g, " ");
 
-    const uid = new ObjectId().str;
+    const uid = text.randomAsciiString(12);
     let options: BuildUrlOptionsInterface = {
       uid,
       urls: [req.body.url],
       directory: `./temp/${uid}/www`,
       appName: appName,
       icon: req.body.icon,
-      ip: req.ip
+      ip: req.ip,
+      recursive: true,
+      maxRecursiveDepth: 3,
+      requestConcurrency: 8
     };
 
     Log.info("build request", options);

@@ -1,16 +1,15 @@
 /**
  * @module Scrape
  */
-
-import * as multer from "multer";
-import { App } from "../app";
+import * as fs from "fs-extra";
 import * as Jimp from "jimp";
 import * as scrape from "website-scraper";
-import * as fs from "fs-extra";
-import { parseString, Builder } from "xml2js";
+import { Builder, parseString } from "xml2js";
 import { zip } from "zip-a-folder";
-import { Log } from "../log";
+
 import { BuildUrlOptionsInterface } from "../interfaces/BuildUrlOptionsInterface";
+import { Log } from "../log";
+
 export class ScrapeService {
   constructor() {}
   async start() {}
@@ -23,7 +22,25 @@ export class ScrapeService {
   public async runScrapper(opts: BuildUrlOptionsInterface) {
     if (fs.existsSync(opts.directory)) await fs.unlink(opts.directory);
 
-    await scrape(opts);
+    await scrape({
+      ...opts,
+      ...{
+        urlFilter: (url: string) => {
+          const urlValid =
+            url.indexOf("cdn.jsdelivr.com") !== -1 ||
+            url.indexOf("fonts.googleapis.com") !== -1 ||
+            url.indexOf("ajax.cloudflare.com") !== -1 ||
+            url.indexOf("cdnjs.cloudflare.com") !== -1 ||
+            url.indexOf("stackpath.bootstrapcdn.com") !== -1 ||
+            url.indexOf("code.jquery.com") !== -1 ||
+            !url.startsWith("http") ||
+            url.replace("https://", "http://").startsWith(opts.urls[0]) ||
+            url.replace("http://", "https://").startsWith(opts.urls[0]);
+          Log.info("url filter", url, urlValid);
+          return urlValid;
+        }
+      }
+    });
 
     // copy default icons
     await fs.copy("./cordova/res", `./temp/${opts.uid}/res`);

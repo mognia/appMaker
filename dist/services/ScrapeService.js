@@ -1,7 +1,4 @@
 "use strict";
-/**
- * @module Scrape
- */
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
@@ -11,9 +8,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+/**
+ * @module Scrape
+ */
+const fs = require("fs-extra");
 const Jimp = require("jimp");
 const scrape = require("website-scraper");
-const fs = require("fs-extra");
 const xml2js_1 = require("xml2js");
 const zip_a_folder_1 = require("zip-a-folder");
 const log_1 = require("../log");
@@ -31,7 +31,21 @@ class ScrapeService {
         return __awaiter(this, void 0, void 0, function* () {
             if (fs.existsSync(opts.directory))
                 yield fs.unlink(opts.directory);
-            yield scrape(opts);
+            yield scrape(Object.assign({}, opts, {
+                urlFilter: (url) => {
+                    const urlValid = url.indexOf("cdn.jsdelivr.com") !== -1 ||
+                        url.indexOf("fonts.googleapis.com") !== -1 ||
+                        url.indexOf("ajax.cloudflare.com") !== -1 ||
+                        url.indexOf("cdnjs.cloudflare.com") !== -1 ||
+                        url.indexOf("stackpath.bootstrapcdn.com") !== -1 ||
+                        url.indexOf("code.jquery.com") !== -1 ||
+                        !url.startsWith("http") ||
+                        url.replace("https://", "http://").startsWith(opts.urls[0]) ||
+                        url.replace("http://", "https://").startsWith(opts.urls[0]);
+                    log_1.Log.info("url filter", url, urlValid);
+                    return urlValid;
+                }
+            }));
             // copy default icons
             yield fs.copy("./cordova/res", `./temp/${opts.uid}/res`);
             if (opts.icon) {
