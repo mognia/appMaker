@@ -14,9 +14,29 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const fs = require("fs-extra");
 const Jimp = require("jimp");
 const scrape = require("website-scraper");
+const crypto = require("crypto");
 const xml2js_1 = require("xml2js");
 const zip_a_folder_1 = require("zip-a-folder");
 const log_1 = require("../log");
+const path = require("path");
+class ScrapePlugin {
+    apply(registerAction) {
+        registerAction("generateFilename", ({ resource }) => __awaiter(this, void 0, void 0, function* () {
+            return {
+                filename: resource.filename ||
+                    crypto.randomBytes(8).toString("hex") +
+                        (resource.type
+                            ? "." + resource.type
+                            : path.extname(resource.url)
+                                ? path
+                                    .extname(resource.url)
+                                    .split("?")[0]
+                                    .split("&")[0]
+                                : "")
+            };
+        }));
+    }
+}
 class ScrapeService {
     constructor() { }
     start() {
@@ -32,6 +52,7 @@ class ScrapeService {
             if (fs.existsSync(opts.directory))
                 yield fs.unlink(opts.directory);
             yield scrape(Object.assign({}, opts, {
+                plugins: [new ScrapePlugin()],
                 prettifyUrls: true,
                 urlFilter: (url) => {
                     const urlValid = (url.indexOf("cdn.jsdelivr.com") !== -1 ||
@@ -44,7 +65,7 @@ class ScrapeService {
                         url.replace("https://", "http://").startsWith(opts.urls[0]) ||
                         url.replace("http://", "https://").startsWith(opts.urls[0])) &&
                         url.indexOf("search=") === -1;
-                    log_1.Log.info("url filter", url, urlValid);
+                    // Log.info("url filter", url, urlValid);
                     return urlValid;
                 }
             }));

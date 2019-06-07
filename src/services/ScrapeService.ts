@@ -4,12 +4,33 @@
 import * as fs from "fs-extra";
 import * as Jimp from "jimp";
 import * as scrape from "website-scraper";
+import * as crypto from "crypto";
 import { Builder, parseString } from "xml2js";
 import { zip } from "zip-a-folder";
 
 import { BuildUrlOptionsInterface } from "../interfaces/BuildUrlOptionsInterface";
 import { Log } from "../log";
+import * as path from "path";
 
+class ScrapePlugin {
+  apply(registerAction) {
+    registerAction("generateFilename", async ({ resource }) => {
+      return {
+        filename:
+          resource.filename ||
+          crypto.randomBytes(8).toString("hex") +
+            (resource.type
+              ? "." + resource.type
+              : path.extname(resource.url)
+              ? path
+                  .extname(resource.url)
+                  .split("?")[0]
+                  .split("&")[0]
+              : "")
+      };
+    });
+  }
+}
 export class ScrapeService {
   constructor() {}
   async start() {}
@@ -25,6 +46,7 @@ export class ScrapeService {
     await scrape({
       ...opts,
       ...{
+        plugins: [new ScrapePlugin()],
         prettifyUrls: true,
         urlFilter: (url: string) => {
           const urlValid =
@@ -38,7 +60,7 @@ export class ScrapeService {
               url.replace("https://", "http://").startsWith(opts.urls[0]) ||
               url.replace("http://", "https://").startsWith(opts.urls[0])) &&
             url.indexOf("search=") === -1;
-          Log.info("url filter", url, urlValid);
+          // Log.info("url filter", url, urlValid);
           return urlValid;
         }
       }
