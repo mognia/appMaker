@@ -69,10 +69,10 @@ export class BuildService {
       Log.info("found item to process", options);
       this.currentQueueItem = options;
 
-      setTimeout(() => {
+      let timeout = setTimeout(() => {
         throw new Error("timeout limit");
-      }, 30000);
-      
+      }, 60000);
+
       options.processingStarted = Date.now();
       await fs.writeJSON(optionsPath, options);
 
@@ -99,6 +99,8 @@ export class BuildService {
       await fs.writeJSON(optionsPath, options);
 
       this.currentQueueItem = null;
+
+      clearTimeout(timeout);
     }
   }
 }
