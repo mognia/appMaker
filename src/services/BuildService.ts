@@ -92,6 +92,8 @@ export class BuildService {
 
       options.processingFinished = Date.now();
       await fs.writeJSON(optionsPath, options);
+
+      this.currentQueueItem = null;
     }
   }
 }

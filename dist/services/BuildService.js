@@ -83,6 +83,7 @@ class BuildService {
                 yield pbService.downloadApp(options, newApp.id, pbApi);
                 options.processingFinished = Date.now();
                 yield fs.writeJSON(optionsPath, options);
+                this.currentQueueItem = null;
             }
         });
     }
