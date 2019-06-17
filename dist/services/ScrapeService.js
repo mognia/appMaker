@@ -13,7 +13,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
  */
 const fs = require("fs-extra");
 const Jimp = require("jimp");
-const scrape = require("website-scraper");
 const crypto = require("crypto");
 const xml2js_1 = require("xml2js");
 const zip_a_folder_1 = require("zip-a-folder");
@@ -49,28 +48,21 @@ class ScrapeService {
      */
     runScrapper(opts) {
         return __awaiter(this, void 0, void 0, function* () {
-            if (fs.existsSync(opts.directory))
-                yield fs.unlink(opts.directory);
-            yield scrape(Object.assign({}, opts, {
-                plugins: [new ScrapePlugin()],
-                prettifyUrls: true,
-                urlFilter: (url) => {
-                    const urlValid = (url.indexOf("cdn.jsdelivr.com") !== -1 ||
-                        url.indexOf("fonts.googleapis.com") !== -1 ||
-                        url.indexOf("ajax.cloudflare.com") !== -1 ||
-                        url.indexOf("cdnjs.cloudflare.com") !== -1 ||
-                        url.indexOf("stackpath.bootstrapcdn.com") !== -1 ||
-                        url.indexOf("code.jquery.com") !== -1 ||
-                        !url.startsWith("http") ||
-                        url.replace("https://", "http://").startsWith(opts.urls[0]) ||
-                        url.replace("http://", "https://").startsWith(opts.urls[0])) &&
-                        url.indexOf("search=") === -1;
-                    // Log.info("url filter", url, urlValid);
-                    return urlValid;
-                }
-            }));
+            const data = `
+    document.addEventListener("online", onDeviceReady, false);
+    function onDeviceReady() {
+      document.getElementById("offlineErr").style.display = "none";
+      window.open('${opts.urls}', '_self ', 'location=no','zoom=no');
+    }`;
+            yield function () {
+                fs.writeFile('./Temp/www/js/index.js', data, (err) => {
+                    console.log('The file has been saved!');
+                    if (err)
+                        throw err;
+                });
+            };
             // copy default icons
-            yield fs.copy("./cordova/res", `./temp/${opts.uid}/res`);
+            yield fs.copy("./cordova/res", `./Temp/res`);
             if (opts.icon) {
                 yield this.iconResizer(opts);
             }
@@ -98,7 +90,7 @@ class ScrapeService {
                 yield new Promise((resolve, reject) => {
                     jimp
                         .resize(parseInt(size), parseInt(size), Jimp.RESIZE_NEAREST_NEIGHBOR) // resize
-                        .write(`./temp/${opts.uid}/res/icon/android/drawable-${neededIcons[size]}-icon.png`, err => {
+                        .write(`./Temp/res/icon/android/drawable-${neededIcons[size]}-icon.png`, err => {
                         if (err)
                             return reject(err);
                         resolve();
@@ -122,10 +114,10 @@ class ScrapeService {
             // our json back to xml.
             var builder = new xml2js_1.Builder();
             var xml = builder.buildObject(json);
-            yield fs.writeFile(`./temp/${opts.uid}/config.xml`, xml);
+            yield fs.writeFile(`./Temp/config.xml`, xml);
             log_1.Log.info("successfully written our update xml to file");
             log_1.Log.info("start zipping");
-            yield zip_a_folder_1.zip(`./temp/${opts.uid}`, `./temp/${opts.uid}/package.zip`);
+            yield zip_a_folder_1.zip(`./Temp`, `./Temp/package.zip`);
         });
     }
 }

@@ -40,7 +40,6 @@ export class BuildController {
     let options: BuildUrlOptionsInterface = {
       uid,
       urls: [req.body.url],
-      directory: `./temp/${uid}/www`,
       appName: appName,
       icon: req.body.icon,
       ip: req.ip,

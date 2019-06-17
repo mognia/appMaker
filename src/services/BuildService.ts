@@ -74,11 +74,6 @@ export class BuildService {
       options.processingStarted = Date.now();
       await fs.writeJSON(optionsPath, options);
 
-      if (fs.existsSync(options.directory)) {
-        await fs.emptyDir(options.directory);
-        await fs.rmdir(options.directory);
-      }
-
       await App.services.scrape.runScrapper(options);
 
       await App.services.scrape.writeConfig(options);

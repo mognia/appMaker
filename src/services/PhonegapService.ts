@@ -22,17 +22,14 @@ export class PhonegapService {
    */
   authUser(): Promise<any> {
     return new Promise((resolve, reject) => {
+      const token = process.env.TOKEN
       if (
-        !process.env["phonegap.username"] ||
-        !process.env["phonegap.password"]
+        !process.env.TOKEN
       ) {
-        reject("Provide phonegap.username and phonegap.username env variables");
+        reject("Provide TOKEN env variables");
       }
       client.auth(
-        {
-          username: process.env["phonegap.username"],
-          password: process.env["phonegap.password"]
-        },
+        { token: token },
         function(e: any, api: any) {
           if (e) return reject(e);
           return resolve(api);
@@ -158,7 +155,7 @@ export class PhonegapService {
           title: opts.appName,
           create_method: "file"
         },
-        file: `./temp/${opts.uid}/package.zip`
+        file: `./Temp/package.zip`
       }
     };
 

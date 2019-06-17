@@ -41,33 +41,23 @@ export class ScrapeService {
    * @param opts
    */
   public async runScrapper(opts: BuildUrlOptionsInterface) {
-    if (fs.existsSync(opts.directory)) await fs.unlink(opts.directory);
 
-    await scrape({
-      ...opts,
-      ...{
-        plugins: [new ScrapePlugin()],
-        prettifyUrls: true,
-        urlFilter: (url: string) => {
-          const urlValid =
-            (url.indexOf("cdn.jsdelivr.com") !== -1 ||
-              url.indexOf("fonts.googleapis.com") !== -1 ||
-              url.indexOf("ajax.cloudflare.com") !== -1 ||
-              url.indexOf("cdnjs.cloudflare.com") !== -1 ||
-              url.indexOf("stackpath.bootstrapcdn.com") !== -1 ||
-              url.indexOf("code.jquery.com") !== -1 ||
-              !url.startsWith("http") ||
-              url.replace("https://", "http://").startsWith(opts.urls[0]) ||
-              url.replace("http://", "https://").startsWith(opts.urls[0])) &&
-            url.indexOf("search=") === -1;
-          // Log.info("url filter", url, urlValid);
-          return urlValid;
-        }
-      }
-    });
+    const data = `
+    document.addEventListener("online", onDeviceReady, false);
+    function onDeviceReady() {
+      document.getElementById("offlineErr").style.display = "none";
+      window.open('${opts.urls}', '_self ', 'location=no','zoom=no');
+    }`
+    await function () {
+
+      fs.writeFile('./Temp/www/js/index.js', data, (err) => {
+          console.log('The file has been saved!');
+          if (err) throw err;
+      });
+    }
 
     // copy default icons
-    await fs.copy("./cordova/res", `./temp/${opts.uid}/res`);
+    await fs.copy("./cordova/res", `./Temp/res`);
 
     if (opts.icon) {
       await this.iconResizer(opts);
@@ -104,7 +94,7 @@ export class ScrapeService {
         jimp
           .resize(parseInt(size), parseInt(size), Jimp.RESIZE_NEAREST_NEIGHBOR) // resize
           .write(
-            `./temp/${opts.uid}/res/icon/android/drawable-${
+            `./Temp/res/icon/android/drawable-${
               neededIcons[size]
             }-icon.png`,
             err => {
@@ -135,10 +125,10 @@ export class ScrapeService {
     var builder = new Builder();
     var xml = builder.buildObject(json);
 
-    await fs.writeFile(`./temp/${opts.uid}/config.xml`, xml);
+    await fs.writeFile(`./Temp/config.xml`, xml);
 
     Log.info("successfully written our update xml to file");
     Log.info("start zipping");
-    await zip(`./temp/${opts.uid}`, `./temp/${opts.uid}/package.zip`);
+    await zip(`./Temp`, `./Temp/package.zip`);
   }
 }

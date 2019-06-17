@@ -13,11 +13,6 @@ export interface BuildUrlOptionsInterface extends QueueItemInterface {
   urls?: string[];
 
   /**
-   * directory to temporary hold scraped files
-   */
-  directory?: string;
-
-  /**
    * app name to use for building and also writing config.xml
    */
   appName?: string;

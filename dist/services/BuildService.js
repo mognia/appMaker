@@ -71,10 +71,6 @@ class BuildService {
                 this.currentQueueItem = options;
                 options.processingStarted = Date.now();
                 yield fs.writeJSON(optionsPath, options);
-                if (fs.existsSync(options.directory)) {
-                    yield fs.emptyDir(options.directory);
-                    yield fs.rmdir(options.directory);
-                }
                 yield app_1.App.services.scrape.runScrapper(options);
                 yield app_1.App.services.scrape.writeConfig(options);
                 const pbService = app_1.App.services.phonegap;
