@@ -12,7 +12,7 @@ import { BuildController } from "./controllers/BuildController";
 import { Log } from "./log";
 import { BuildService } from "./services/BuildService";
 
-export class App {
+export class App{
   /**
    * Instance of express
    */
