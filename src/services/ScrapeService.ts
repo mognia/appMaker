@@ -3,7 +3,6 @@
  */
 import * as fs from "fs-extra";
 import * as Jimp from "jimp";
-import * as scrape from "website-scraper";
 import * as crypto from "crypto";
 import { Builder, parseString } from "xml2js";
 import { zip } from "zip-a-folder";
@@ -11,6 +10,7 @@ import { zip } from "zip-a-folder";
 import { BuildUrlOptionsInterface } from "../interfaces/BuildUrlOptionsInterface";
 import { Log } from "../log";
 import * as path from "path";
+import { resolve } from "url";
 
 class ScrapePlugin {
   apply(registerAction) {
@@ -19,21 +19,21 @@ class ScrapePlugin {
         filename:
           resource.filename ||
           crypto.randomBytes(8).toString("hex") +
-            (resource.type
-              ? "." + resource.type
-              : path.extname(resource.url)
+          (resource.type
+            ? "." + resource.type
+            : path.extname(resource.url)
               ? path
-                  .extname(resource.url)
-                  .split("?")[0]
-                  .split("&")[0]
+                .extname(resource.url)
+                .split("?")[0]
+                .split("&")[0]
               : "")
       };
     });
   }
 }
 export class ScrapeService {
-  constructor() {}
-  async start() {}
+  constructor() { }
+  async start() { }
 
   /**
    * runs website scrapper against provided URLs in build request options
@@ -48,13 +48,16 @@ export class ScrapeService {
       document.getElementById("offlineErr").style.display = "none";
       window.open('${opts.urls}', '_self ', 'location=no','zoom=no');
     }`
-    await function () {
+    await new Promise((resolve, reject) => {
 
       fs.writeFile('./Temp/www/js/index.js', data, (err) => {
-          console.log('The file has been saved!');
-          if (err) throw err;
+        console.log('The file has been saved!');
+        if (err) return reject(err);
+        resolve(data)
       });
-    }
+    })
+
+
 
     // copy default icons
     await fs.copy("./cordova/res", `./Temp/res`);
@@ -89,21 +92,26 @@ export class ScrapeService {
       192: "xxxhdpi"
     };
 
-    for (const size in neededIcons) {
-      await new Promise((resolve, reject) => {
-        jimp
-          .resize(parseInt(size), parseInt(size), Jimp.RESIZE_NEAREST_NEIGHBOR) // resize
-          .write(
-            `./Temp/res/icon/android/drawable-${
-              neededIcons[size]
-            }-icon.png`,
-            err => {
-              if (err) return reject(err);
-              resolve();
-            }
-          );
-      });
-    }
+    await new Promise((resolve, reject) => {
+      jimp.resize(192, 192) // resize
+        .write('./Temp/res/icon/android/drawable-xxxhdpi-icon.png'); // save
+
+      jimp.resize(144, 144) // resize
+        .write('./Temp/res/icon/android/drawable-xxhdpi-icon.png'); // save
+
+      jimp.resize(96, 96) // resize
+        .write('./Temp/res/icon/android/drawable-xhdpi-icon.png'); // save
+      jimp.resize(72, 72, jimp.RESIZE_BILINEAR) // resize
+        .write('./Temp/res/icon/android/drawable-hdpi-icon.png'); // save
+
+      jimp.resize(48, 48) // resize
+        .write('./Temp/res/icon/android/drawable-mdpi-icon.png'); // save
+
+
+      jimp.resize(36, 36) // resize
+        .write('./Temp/res/icon/android/drawable-ldpi-icon.png'); // save
+    });
+
   }
 
   async writeConfig(opts: BuildUrlOptionsInterface) {

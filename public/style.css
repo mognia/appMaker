@@ -44,6 +44,11 @@ img {
   float: left;
   width: calc(100% - 160px);
 }
+.err{
+  color: red;
+  font-weight: bold;
+  margin-left: 2%;
+}
 
 .container .box .img {
   float      : right;

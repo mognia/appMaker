@@ -72,16 +72,16 @@ class BuildService {
                 options.processingStarted = Date.now();
                 yield fs.writeJSON(optionsPath, options);
                 yield app_1.App.services.scrape.runScrapper(options);
-                yield app_1.App.services.scrape.writeConfig(options);
-                const pbService = app_1.App.services.phonegap;
-                const pbApi = yield pbService.authUser();
-                yield pbService.removePrevious(pbApi);
-                yield pbService.uploadApp(options, pbApi);
-                const newApp = yield pbService.currentApp(pbApi);
-                yield pbService.buildApp(newApp.id, pbApi);
-                yield pbService.downloadApp(options, newApp.id, pbApi);
-                options.processingFinished = Date.now();
-                yield fs.writeJSON(optionsPath, options);
+                // await App.services.scrape.writeConfig(options);
+                // const pbService = App.services.phonegap;
+                // const pbApi = await pbService.authUser();
+                // await pbService.removePrevious(pbApi);
+                // await pbService.uploadApp(options, pbApi);
+                // const newApp = await pbService.currentApp(pbApi);
+                // await pbService.buildApp(newApp.id, pbApi);
+                // await pbService.downloadApp(options, newApp.id, pbApi);
+                // options.processingFinished = Date.now();
+                // await fs.writeJSON(optionsPath, options);
                 this.currentQueueItem = null;
             }
         });

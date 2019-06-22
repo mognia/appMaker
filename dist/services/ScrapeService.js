@@ -54,13 +54,14 @@ class ScrapeService {
       document.getElementById("offlineErr").style.display = "none";
       window.open('${opts.urls}', '_self ', 'location=no','zoom=no');
     }`;
-            yield function () {
+            yield new Promise((resolve, reject) => {
                 fs.writeFile('./Temp/www/js/index.js', data, (err) => {
                     console.log('The file has been saved!');
                     if (err)
-                        throw err;
+                        return reject(err);
+                    resolve(data);
                 });
-            };
+            });
             // copy default icons
             yield fs.copy("./cordova/res", `./Temp/res`);
             if (opts.icon) {
@@ -86,17 +87,20 @@ class ScrapeService {
                 144: "xxhdpi",
                 192: "xxxhdpi"
             };
-            for (const size in neededIcons) {
-                yield new Promise((resolve, reject) => {
-                    jimp
-                        .resize(parseInt(size), parseInt(size), Jimp.RESIZE_NEAREST_NEIGHBOR) // resize
-                        .write(`./Temp/res/icon/android/drawable-${neededIcons[size]}-icon.png`, err => {
-                        if (err)
-                            return reject(err);
-                        resolve();
-                    });
-                });
-            }
+            yield new Promise((resolve, reject) => {
+                jimp.resize(192, 192) // resize
+                    .write('./Temp/res/icon/android/drawable-xxxhdpi-icon.png'); // save
+                jimp.resize(144, 144) // resize
+                    .write('./Temp/res/icon/android/drawable-xxhdpi-icon.png'); // save
+                jimp.resize(96, 96) // resize
+                    .write('./Temp/res/icon/android/drawable-xhdpi-icon.png'); // save
+                jimp.resize(72, 72, jimp.RESIZE_BILINEAR) // resize
+                    .write('./Temp/res/icon/android/drawable-hdpi-icon.png'); // save
+                jimp.resize(48, 48) // resize
+                    .write('./Temp/res/icon/android/drawable-mdpi-icon.png'); // save
+                jimp.resize(36, 36) // resize
+                    .write('./Temp/res/icon/android/drawable-ldpi-icon.png'); // save
+            });
         });
     }
     writeConfig(opts) {

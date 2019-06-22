@@ -76,21 +76,21 @@ export class BuildService {
 
       await App.services.scrape.runScrapper(options);
 
-      await App.services.scrape.writeConfig(options);
+      // await App.services.scrape.writeConfig(options);
 
-      const pbService = App.services.phonegap;
-      const pbApi = await pbService.authUser();
-      await pbService.removePrevious(pbApi);
+      // const pbService = App.services.phonegap;
+      // const pbApi = await pbService.authUser();
+      // await pbService.removePrevious(pbApi);
 
-      await pbService.uploadApp(options, pbApi);
+      // await pbService.uploadApp(options, pbApi);
 
-      const newApp = await pbService.currentApp(pbApi);
+      // const newApp = await pbService.currentApp(pbApi);
 
-      await pbService.buildApp(newApp.id, pbApi);
-      await pbService.downloadApp(options, newApp.id, pbApi);
+      // await pbService.buildApp(newApp.id, pbApi);
+      // await pbService.downloadApp(options, newApp.id, pbApi);
 
-      options.processingFinished = Date.now();
-      await fs.writeJSON(optionsPath, options);
+      // options.processingFinished = Date.now();
+      // await fs.writeJSON(optionsPath, options);
 
       this.currentQueueItem = null;
     }

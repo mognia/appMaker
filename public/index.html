@@ -43,7 +43,9 @@
             <label for="">Icon</label>
             <input type="file" id="file" />
           </div>
+          <div id="fileErr">
 
+          </div>
           <button type="submit">
             Build my app
           </button>
@@ -109,8 +111,6 @@
 
         $('.history tbody').html('');
 
-        console.log(history);
-
         for (const item of history) {
           $('.history table tbody').append($(
             `<tr>
@@ -169,7 +169,23 @@
 
 
       $("#file").change((event) => {
+        let iconFile = document.querySelector("#file").files[0];
+      //  var Extension = iconFile.substring(iconFile.lastIndexOf('.') + 1).toLowerCase();
 
+        console.log(iconFile);
+        if (iconFile.type == 'image/png' || iconFile.type =='image/jpg' || iconFile.type =='image/jpeg' ||iconFile.type == 'image/gif') {
+          if(iconFile.size >= 1000000){
+            document.getElementById('fileErr').innerHTML = '<p class="err">Maximum image size 1 MB. try again</p>';
+            $('.box .img').html(`<img id="icon" src="" />`)
+          iconFile = null;
+          return;
+          }
+        }else{
+          document.getElementById('fileErr').innerHTML = '<p class="err">invalid file input. Try valid image file</p>';
+          iconFile = null;
+          $('.box .img').html(`<img id="icon" src="" />`)
+          return;
+        }
         const fr = new FileReader();
 
         fr.readAsDataURL(document.querySelector("#file").files[0]);
