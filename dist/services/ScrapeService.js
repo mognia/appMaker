@@ -100,6 +100,7 @@ class ScrapeService {
                     .write('./Temp/res/icon/android/drawable-mdpi-icon.png'); // save
                 jimp.resize(36, 36) // resize
                     .write('./Temp/res/icon/android/drawable-ldpi-icon.png'); // save
+                resolve();
             });
         });
     }

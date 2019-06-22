@@ -110,6 +110,8 @@ export class ScrapeService {
 
       jimp.resize(36, 36) // resize
         .write('./Temp/res/icon/android/drawable-ldpi-icon.png'); // save
+
+        resolve();
     });
 
   }
