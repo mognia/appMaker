@@ -90,6 +90,7 @@ export class BuildService {
       await pbService.downloadApp(options, newApp.id, pbApi);
 
       options.processingFinished = Date.now();
+      options.apkAddress = `./public/apk/${options.uid}/${options.appName}.apk`
       await fs.writeJSON(optionsPath, options);
 
       this.currentQueueItem = null;

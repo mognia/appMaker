@@ -81,6 +81,7 @@ class BuildService {
                 yield pbService.buildApp(newApp.id, pbApi);
                 yield pbService.downloadApp(options, newApp.id, pbApi);
                 options.processingFinished = Date.now();
+                options.apkAddress = `./public/apk/${options.uid}/${options.appName}.apk`;
                 yield fs.writeJSON(optionsPath, options);
                 this.currentQueueItem = null;
             }

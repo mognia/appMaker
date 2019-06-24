@@ -48,9 +48,6 @@ class BuildController {
                 appName: appName,
                 icon: req.body.icon,
                 ip: req.ip,
-                recursive: true,
-                maxRecursiveDepth: req.body.maxRecursiveDepth || 2,
-                requestConcurrency: req.body.requestConcurrency || 32
             };
             log_1.Log.info("build request", options);
             yield fs.ensureDir("./queue");

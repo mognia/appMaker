@@ -4,7 +4,6 @@
 import { text } from "serendip-utility";
 import { Request, Response } from "express";
 import * as fs from "fs-extra";
-
 import { BuildUrlOptionsInterface } from "../interfaces/BuildUrlOptionsInterface";
 import { Log } from "../log";
  
@@ -43,9 +42,6 @@ export class BuildController {
       appName: appName,
       icon: req.body.icon,
       ip: req.ip,
-      recursive: true,
-      maxRecursiveDepth: req.body.maxRecursiveDepth || 2,
-      requestConcurrency: req.body.requestConcurrency || 32
     };
 
     Log.info("build request", options);
